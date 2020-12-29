@@ -1,0 +1,30 @@
+<page-header title="学生组: {{ studentGroup.name }}" [action]="action">
+  <ng-template #action>
+    <button nz-button (click)="openBindStudentsEditor()" [nzType]="'primary'">
+      <i nz-icon nzType="plus"></i>
+      <span>绑定学生</span>
+    </button>
+  </ng-template>
+</page-header>
+
+<nz-card [nzBordered]="false">
+  总人数：{{ students.length }}
+  <nz-table [nzData]="students" nzSize="middle">
+    <thead>
+      <tr>
+        <th>学号</th>
+        <th>姓名</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of students">
+        <td>{{ student.username }}</td>
+        <td>{{ student.fullName }}</td>
+        <td>
+          <a (click)="unbind([student.id])">移除</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

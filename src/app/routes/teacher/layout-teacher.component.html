@@ -1,0 +1,26 @@
+<nz-sider class="alain-default__aside">
+  <ul nz-menu nzMode="inline">
+    <li nz-menu-item nzMatchRouter>
+      <a [routerLink]="['expr']">
+        <i nz-icon nzIconfont="expr"></i>
+        实验
+      </a>
+    </li>
+    <li nz-menu-item nzMatchRouter>
+      <a [routerLink]="['exam']">
+        <i nz-icon nzIconfont="exam"></i>
+        测试
+      </a>
+    </li>
+    <li nz-menu-item nzMatchRouter>
+      <a [routerLink]="['student-group']">
+        <i nz-icon nzIconfont="group"></i>
+        学生组
+      </a>
+    </li>
+  </ul>
+</nz-sider>
+
+<section class="alain-default__content">
+  <router-outlet></router-outlet>
+</section>

@@ -1,0 +1,38 @@
+<page-header [title]="expr?.title" [action]="action" [breadcrumb]="breadcrumb">
+  <ng-template #breadcrumb>
+    <nz-breadcrumb *ngIf="exam != null">
+      <nz-breadcrumb-item>
+        <a [routerLink]="['../..', 'view']" [queryParams]="{ examId: exam.id }">测试：{{ exam.title }}</a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item> 剩余时间: {{ remainTime }} </nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+  <ng-template #action>
+    <button nz-button nzType="primary" (click)="submitExpr()">提交</button>
+  </ng-template>
+  <sv-container *ngIf="expr && exam" size="small" col="2">
+    <sv *ngFor="let hostId of expr.hostIds" [label]="'host' + (hostId + 1)">
+      <nz-tag *ngIf="hostStats[hostId]" nzColor="success">已连接</nz-tag>
+      <nz-tag *ngIf="!hostStats[hostId]" [nzColor]="'magenta'"> 连接码：{{ exam.id }}-{{ expr.id }}-{{ hostId + 1 }} </nz-tag>
+    </sv>
+  </sv-container>
+  <nz-collapse class="mt-md">
+    <nz-collapse-panel
+      *ngFor="let step of expr?.steps"
+      [nzHeader]="'#' + (step.idx + 1) + ' ' + step.title"
+      [nzActive]="true"
+      [nzExtra]="extraTpl"
+    >
+      <pre>
+        {{ step.description }}
+      </pre>
+      <ng-template #extraTpl>
+        <i *ngIf="step.checking" nz-icon nzType="loading"></i>
+        <span *ngIf="!step.checking">
+          {{ step.score === undefined ? '-' : step.score }} / {{ step.fullScore }}
+          <i nz-icon nzType="play-circle" (click)="checkStep(step, $event)"></i>
+        </span>
+      </ng-template>
+    </nz-collapse-panel>
+  </nz-collapse>
+</page-header>

@@ -1,0 +1,19 @@
+<nz-card>
+  <div style="margin-bottom: 1em;">
+    <button nz-button nzType="primary" (click)="addExprs()">添加实验</button>
+  </div>
+  <nz-table #exprsTable [nzData]="exprs" [nzLoading]="loading">
+    <thead>
+      <tr>
+        <th>名称</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let expr of exprs">
+        <td>{{ expr.title }}</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

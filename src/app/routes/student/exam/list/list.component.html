@@ -1,0 +1,36 @@
+<page-header [title]="'测试列表'" [tab]="tab">
+  <ng-template #tab>
+    <nz-tabset>
+      <nz-tab nzTitle="当前测试">
+        <nz-table [nzData]="exams" [nzLoading]="loading" [nzShowPagination]="false">
+          <thead>
+          <tr>
+            <th>名称</th>
+            <th>结束时间</th>
+            <th>状态</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let exam of exams">
+            <td>
+              {{ exam.title }}
+            </td>
+            <td>{{ exam.endedAt | dateFormat}}</td>
+            <td>
+              <span *ngIf="!exam.started">未开始</span>
+              <span *ngIf="exam.ended">已结束</span>
+              <a
+                  *ngIf="exam.ongoing"
+                  [routerLink]="['..', 'view']"
+                  [queryParams]="{ examId: exam.id }"
+              >正在进行</a
+              >
+            </td>
+          </tr>
+          </tbody>
+        </nz-table>
+      </nz-tab>
+      <nz-tab nzTitle="历史成绩"></nz-tab>
+    </nz-tabset>
+  </ng-template>
+</page-header>

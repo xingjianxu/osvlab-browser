@@ -1,0 +1,37 @@
+<page-header title="测试: {{ exam?.title }}" [tab]="tab" [extra]="extra">
+  <ng-template #tab>
+    <nz-tabset>
+      <nz-tab nzTitle="实验列表">
+        <nz-table [nzData]="exprs" [nzLoading]="exprsLoading || examLoading" [nzShowPagination]="false">
+          <thead>
+            <tr>
+              <th>名称</th>
+              <th>得分</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let expr of exprs">
+              <td>
+                <a [routerLink]="['..', 'expr', 'view']" [queryParams]="{ examId: exam?.id, exprId: expr?.id }">{{ expr.title }}</a>
+              </td>
+              <td>0/10</td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </nz-tab>
+    </nz-tabset>
+  </ng-template>
+
+  <ng-template #extra>
+    <div nz-row>
+      <div nz-col nzXs="24" nzSm="12">
+        <p class="text-grey">状态</p>
+        <p class="text-lg">待审批</p>
+      </div>
+      <div nz-col nzXs="24" nzSm="12">
+        <p class="text-grey">订单金额</p>
+        <p class="text-lg">¥ 568.08</p>
+      </div>
+    </div>
+  </ng-template>
+</page-header>

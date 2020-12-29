@@ -1,0 +1,28 @@
+<page-header [title]="'学生组列表'" [action]="action">
+  <ng-template #action>
+    <button nz-button (click)="openEditor({})" [nzType]="'primary'">
+      <i nz-icon nzType="plus"></i>
+      <span>新建</span>
+    </button>
+  </ng-template>
+</page-header>
+
+<nz-table #examsTable [nzData]="userGroups">
+  <thead>
+  <tr>
+    <th>名称</th>
+    <th>描述</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let userGroup of userGroups">
+    <td><a [routerLink]="['..', 'view']" [queryParams]="{student_group_id: userGroup.id, tab: 'students'}">{{userGroup.name}}</a></td>
+    <td>{{userGroup.description}}</td>
+    <td>
+      <a (click)="openEditor(userGroup)">编辑</a>
+    </td>
+  </tr>
+  </tbody>
+</nz-table>
+

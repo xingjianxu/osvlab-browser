@@ -1,0 +1,33 @@
+<page-header [title]="'测试列表'" [action]="action">
+  <ng-template #action>
+    <button nz-button (click)="openEditor({})" [nzType]="'primary'">
+      <i nz-icon nzType="plus"></i>
+      <span>新建</span>
+    </button>
+  </ng-template>
+</page-header>
+
+<nz-table #examsTable [nzData]="exams">
+  <thead>
+    <tr>
+      <th>名称</th>
+      <th>描述</th>
+      <th>开始时间</th>
+      <th>结束时间</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let exam of examsTable.data">
+      <td>
+        <a [routerLink]="['..', 'view']" [queryParams]="{ exam_id: exam.id, tab: 'examinee' }">{{ exam.title }}</a>
+      </td>
+      <td>{{ exam.description }}</td>
+      <td>{{ exam['startedAt'] | dateFormat }}</td>
+      <td>{{ exam['endedAt'] | dateFormat }}</td>
+      <td>
+        <a (click)="openEditor(exam)">编辑</a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

@@ -1,0 +1,20 @@
+<page-header title="实验步骤编辑" [breadcrumb]="breadcrumb" [action]="action">
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <a [routerLink]="['/', 'teacher', 'expr']">实验</a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a [routerLink]="['/', 'teacher', 'expr', 'view']" [queryParams]="{ exprId: record?.expr?.id }">
+          {{ record?.expr?.title }}
+        </a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="record?.title"> #{{ record.idx + 1 }}: {{ record.title }} </nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
+  <ng-template #action>
+    <button nz-button nzType="primary" (click)="save(sf.value)" [disabled]="!sf.valid">提交</button>
+    <button nz-button (click)="sf.reset()">重置</button>
+  </ng-template>
+</page-header>
+<sf #sf mode="edit" [schema]="schema" [formData]="record" button="none"></sf>

@@ -1,0 +1,17 @@
+<page-header title="实验: {{ expr.title }}" [action]="action">
+  <ng-template #action>
+    <a nz-button [routerLink]="['..', 'step', 'edit']" [queryParams]="{ exprId: expr.id }" [nzType]="'primary'">
+      <i nz-icon nzType="plus"></i>
+      <span>新建步骤</span>
+    </a>
+  </ng-template>
+</page-header>
+
+<div cdkDropList (cdkDropListDropped)="drop($event)">
+  <nz-card nzTitle="#{{ i + 1 }} {{ step.title }}" [nzExtra]="extraTemplate" *ngFor="let step of this.expr.steps; let i = index" cdkDrag>
+    <p>{{ step.description }}</p>
+    <ng-template #extraTemplate>
+      <a [routerLink]="['..', 'step', 'edit']" [queryParams]="{ stepId: step.id }">编辑</a>
+    </ng-template>
+  </nz-card>
+</div>

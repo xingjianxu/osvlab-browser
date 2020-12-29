@@ -1,0 +1,27 @@
+<page-header [title]="'实验列表'" [action]="action">
+  <ng-template #action>
+    <button nz-button (click)="openEditor({})" [nzType]="'primary'">
+      <i nz-icon nzType="plus"></i>
+      <span>新建</span>
+    </button>
+  </ng-template>
+</page-header>
+
+<nz-table #exprsTable [nzData]="exprs" [nzLoading]="exprTableLoading">
+  <thead>
+    <tr>
+      <th>名称</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let expr of exprs">
+      <td>
+        <a [routerLink]="['..', 'view']" [queryParams]="{ exprId: expr.id }">{{ expr.title }}</a>
+      </td>
+      <td>
+        <a (click)="openEditor(expr)">编辑</a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
