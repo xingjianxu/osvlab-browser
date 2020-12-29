@@ -5,7 +5,6 @@ import {map} from 'rxjs/operators';
 import {Exam} from './exam';
 import {Expr} from './expr';
 import {User} from './user';
-import {StepScore} from '@service/step-score';
 
 @Injectable({
   providedIn: 'root',
@@ -15,23 +14,19 @@ export class ExamService {
   }
 
   list(): Observable<Exam[]> {
-    return this.httpClient.get<any[]>('api/exam/list').pipe(
-      map((resp) => {
-        return resp.map((e) => {
-          return Exam.fromJSON(e);
-        });
-      }),
-    );
+    return this.httpClient.get<any[]>('api/exam/list').pipe(map((resp) => {
+      return resp.map((e) => {
+        return Exam.fromJSON(e);
+      });
+    }));
   }
 
   listCurrentUserExams(): Observable<Exam[]> {
-    return this.httpClient.get<any[]>('api/exam/listCurrentUserExams').pipe(
-      map((resp) => {
-        return resp.map((e) => {
-          return Exam.fromJSON(e);
-        });
-      }),
-    );
+    return this.httpClient.get<any[]>('api/exam/listCurrentUserExams').pipe(map((resp) => {
+      return resp.map((e) => {
+        return Exam.fromJSON(e);
+      });
+    }));
   }
 
   get(examId: string) {
@@ -50,7 +45,19 @@ export class ExamService {
   }
 
   getExprs(examId: number | string) {
-    return this.httpClient.get<Expr[]>('api/exam/exprs', {examId});
+    return this.httpClient.get<Expr[]>('api/exam/exprs', {examId}).pipe(map((resp) => {
+      return resp.map((e) => {
+        return Expr.fromJSON(e);
+      });
+    }));
+  }
+
+  getCurrentUserExprs(examId: number | string) {
+    return this.httpClient.get<{ expr: Expr, score: number }[]>('api/exam/currentUserExprs', {examId}).pipe(map((resp) => {
+      return resp.map((e) => {
+        return Expr.fromJSON({...e.expr, score: e.score});
+      });
+    }));
   }
 
   getExaminees(examId: number) {
@@ -65,11 +72,4 @@ export class ExamService {
     return this.httpClient.delete<number>('api/exam/examinees', {examId});
   }
 
-  getHostStats(examId: number | string, exprId: number | string) {
-    return this.httpClient.get<[]>('api/exam/hostStats', {examId, exprId});
-  }
-
-  getExprStepScores(examId: number | string, exprId: number | string) {
-    return this.httpClient.get<StepScore[]>('api/exam/exprStepScores', {examId, exprId});
-  }
 }

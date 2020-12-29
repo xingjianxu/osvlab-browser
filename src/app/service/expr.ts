@@ -1,10 +1,11 @@
-import { Step } from './step';
+import {Step} from './step';
 
 export class Expr {
   id: number;
   title: string;
   hostCount: number;
   steps: Step[];
+  score: number;
 
   get hostIds() {
     return [...new Array(this.hostCount).keys()];

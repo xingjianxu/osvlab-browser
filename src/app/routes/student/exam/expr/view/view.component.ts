@@ -10,7 +10,8 @@ import {Subscription, timer, combineLatest} from 'rxjs';
 import {delay, map, switchMap, take} from 'rxjs/operators';
 import {differenceInSeconds} from 'date-fns';
 import {StompRService} from "@stomp/ng2-stompjs";
-import {StepScore} from "@service/step-score";
+import {UserStateService} from "@service/user-state.service";
+import {StepUserState} from "@service/step-user-state";
 
 @Component({
   selector: 'app-student-expr-view',
@@ -30,6 +31,7 @@ export class ViewComponent implements OnInit, OnDestroy {
   stepCheckTopic$: Subscription;
 
   constructor(
+    private userStateService: UserStateService,
     private examService: ExamService,
     private exprService: ExprService,
     private stepService: StepService,
@@ -78,10 +80,10 @@ export class ViewComponent implements OnInit, OnDestroy {
         return this.exprService.get(params.get('exprId'));
       })),
       this.activatedRoute.queryParamMap.pipe(switchMap((params) => {
-        return this.examService.getHostStats(params.get('examId'), params.get('exprId'));
+        return this.userStateService.getExprHostStates(params.get('examId'), params.get('exprId'));
       })),
       this.activatedRoute.queryParamMap.pipe(switchMap((params) => {
-        return this.examService.getExprStepScores(params.get('examId'), params.get('exprId'));
+        return this.userStateService.listStepUserStates(params.get('examId'), params.get('exprId'));
       })),
     ]).subscribe(([expr, hostStats, stepScores]) => {
       this.hostStats = hostStats;
@@ -92,10 +94,10 @@ export class ViewComponent implements OnInit, OnDestroy {
     });
   }
 
-  updateStepScore(steps: Step[], stepScore: StepScore) {
+  updateStepScore(steps: Step[], stepUserState: StepUserState) {
     steps.forEach((step) => {
-      if (step.id == stepScore.stepId) {
-        step.score = stepScore.score;
+      if (step.id == stepUserState.stepId) {
+        step.score = stepUserState.score;
         step.checking = false;
       }
     })
@@ -104,7 +106,7 @@ export class ViewComponent implements OnInit, OnDestroy {
   checkStep(step: Step, e) {
     e.stopPropagation();
     step.checking = true;
-    this.stepService.check(this.exam.id, step.id).subscribe(() => {
+    this.userStateService.checkStep(this.exam.id, step.id).subscribe(() => {
     });
   }
 

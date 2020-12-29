@@ -12,6 +12,7 @@ export class Exam {
   createdAt: Date;
   exprs: Expr[];
   examinees: User[];
+  fullScore: number;
 
   get started() {
     return isBefore(this.startedAt, new Date());

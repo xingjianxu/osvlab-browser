@@ -1,21 +1,24 @@
-<page-header title="测试: {{ exam?.title }}" [tab]="tab" [extra]="extra">
+<page-header title="测试: {{ examUserState?.exam.title }}" [tab]="tab" [extra]="extra">
   <ng-template #tab>
     <nz-tabset>
       <nz-tab nzTitle="实验列表">
-        <nz-table [nzData]="exprs" [nzLoading]="exprsLoading || examLoading" [nzShowPagination]="false">
+        <nz-table #exprsTable [nzData]="exprUserStates" [nzLoading]="exprsLoading || examLoading" [nzShowPagination]="false">
           <thead>
-            <tr>
-              <th>名称</th>
-              <th>得分</th>
-            </tr>
+          <tr>
+            <th>名称</th>
+            <th>得分</th>
+          </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let expr of exprs">
-              <td>
-                <a [routerLink]="['..', 'expr', 'view']" [queryParams]="{ examId: exam?.id, exprId: expr?.id }">{{ expr.title }}</a>
-              </td>
-              <td>0/10</td>
-            </tr>
+          <tr *ngFor="let eus of exprsTable.data">
+            <td>
+              <a [routerLink]="['..', 'expr', 'view']"
+                 [queryParams]="{ examId: examUserState?.exam.id, exprId: eus.expr.id }">
+                {{ eus.expr.title }}
+              </a>
+            </td>
+            <td>{{eus.score}}/{{eus.expr.fullScore}}</td>
+          </tr>
           </tbody>
         </nz-table>
       </nz-tab>
@@ -25,8 +28,8 @@
   <ng-template #extra>
     <div nz-row>
       <div nz-col nzXs="24" nzSm="12">
-        <p class="text-grey">状态</p>
-        <p class="text-lg">待审批</p>
+        <p class="text-grey">分数</p>
+        <p *ngIf="!examLoading" class="text-lg">{{examUserState.score}}/{{examUserState.exam.fullScore}}</p>
       </div>
       <div nz-col nzXs="24" nzSm="12">
         <p class="text-grey">订单金额</p>
