@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Expr } from '../../../../service/expr';
-import { Exam } from '../../../../service/exam';
+import { Expr } from '@service/expr';
+import { Exam } from '@service/exam';
 import { switchMap } from 'rxjs/operators';
 import { ModalHelper } from '@delon/theme';
 import { AddExprsComponent } from './add-exprs/add-exprs.component';
-import { ExamService } from '../../../../service/exam.service';
+import { ExamService } from '@service/exam.service';
 
 @Component({
   selector: 'app-teacher-exam-view-expr-tab',

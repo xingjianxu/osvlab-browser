@@ -2,9 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalHelper } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { switchMap } from 'rxjs/operators';
-import { Exam } from '../../../../service/exam';
-import { ExamService } from '../../../../service/exam.service';
-import { User } from '../../../../service/user';
+import { Exam } from '@service/exam';
+import { ExamService } from '@service/exam.service';
+import { User } from '@service/user';
 import { AddExamineesComponent } from './add-examinees/add-examinees.component';
 
 @Component({

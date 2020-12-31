@@ -5,6 +5,7 @@ import {map} from 'rxjs/operators';
 import {Exam} from './exam';
 import {Expr} from './expr';
 import {User} from './user';
+import {ScoreStat} from "@service/score-stat";
 
 @Injectable({
   providedIn: 'root',
@@ -72,4 +73,7 @@ export class ExamService {
     return this.httpClient.delete<number>('api/exam/examinees', {examId});
   }
 
+  scoreStats(examId: number | string) {
+    return this.httpClient.get<ScoreStat[]>('api/exam/scoreStats', {examId});
+  }
 }
