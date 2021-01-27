@@ -14,13 +14,13 @@ import {ExprScore} from "@service/expr-score";
   styleUrls: ['./view.component.less'],
 })
 export class ViewComponent implements OnInit {
-  examUserState: ExamScore;
-  exprUserStates: ExprScore[];
+  examScore: ExamScore;
+  exprScores: ExprScore[];
   examLoading = true;
   exprsLoading = true;
 
   constructor(
-    private userStateService: ScoreService,
+    private scoreService: ScoreService,
     private examService: ExamService,
     private activatedRoute: ActivatedRoute
   ) {
@@ -29,17 +29,17 @@ export class ViewComponent implements OnInit {
   ngOnInit(): void {
     this.examLoading = true;
     this.activatedRoute.queryParamMap.pipe(switchMap((queryMap) => {
-      return this.userStateService.getExamScoreUS(queryMap.get('examId'));
-    })).subscribe((examUserState) => {
-      this.examUserState = examUserState;
+      return this.scoreService.getExamScore(queryMap.get('examId'));
+    })).subscribe((examScore) => {
+      this.examScore = examScore;
       this.examLoading = false;
     });
 
     this.exprsLoading = true;
     this.activatedRoute.queryParamMap.pipe(switchMap((queryMap) => {
-      return this.userStateService.listExprScoreUSs(queryMap.get('examId'));
+      return this.scoreService.listExprScores(queryMap.get('examId'));
     })).subscribe((resp) => {
-      this.exprUserStates = resp;
+      this.exprScores = resp;
       this.exprsLoading = false;
     });
   }

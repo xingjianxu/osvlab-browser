@@ -12,13 +12,13 @@ export class ScoreService {
   constructor(private httpClient: _HttpClient) {
   }
 
-  getExamScoreUS(examId: string | number) {
+  getExamScore(examId: string | number) {
     return this.httpClient.get<ExamScore>('api/exam/score/getExamScore', {examId}).pipe(map((resp) => {
       return ExamScore.fromJSON(resp);
     }));
   }
 
-  listExprScoreUSs(examId: string | number) {
+  listExprScores(examId: string | number) {
     return this.httpClient.get<{}[]>('api/exam/score/listExprScores', {examId}).pipe(map((resp) => {
       return resp.map((e) => {
         return ExprScore.fromJSON(e);
@@ -30,7 +30,7 @@ export class ScoreService {
     return this.httpClient.get<[]>('api/exam/score/listExprHostStates', {examId, exprId});
   }
 
-  listStepScoreUSs(examId: number | string, exprId: number | string) {
+  listStepScores(examId: number | string, exprId: number | string) {
     return this.httpClient.get<[]>('api/exam/score/listStepScores', {examId, exprId});
   }
 

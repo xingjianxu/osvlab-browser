@@ -6,6 +6,8 @@ export class ExamScore {
   score: number;
 
   static fromJSON(data: {}): ExamScore {
-    return Object.assign(new this(), data);
+    const examScore = Object.assign(new this(), data);
+    examScore.exam = Exam.fromJSON(examScore.exam);
+    return examScore;
   }
 }

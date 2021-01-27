@@ -83,7 +83,7 @@ export class ViewComponent implements OnInit, OnDestroy {
         return this.userStateService.getExprHostStates(params.get('examId'), params.get('exprId'));
       })),
       this.activatedRoute.queryParamMap.pipe(switchMap((params) => {
-        return this.userStateService.listStepScoreUSs(params.get('examId'), params.get('exprId'));
+        return this.userStateService.listStepScores(params.get('examId'), params.get('exprId'));
       })),
     ]).subscribe(([expr, hostStats, stepScores]) => {
       this.hostStats = hostStats;
