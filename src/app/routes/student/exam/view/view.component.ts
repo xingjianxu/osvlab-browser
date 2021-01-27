@@ -4,9 +4,9 @@ import {Exam} from '@service/exam';
 import {ExamService} from '@service/exam.service';
 import {Expr} from '@service/expr';
 import {switchMap} from 'rxjs/operators';
-import {UserStateService} from "@service/user-state.service";
-import {ExamUserState} from "@service/exam-user-state";
-import {ExprUserState} from "@service/expr-user-state";
+import {ScoreService} from "@service/score.service";
+import {ExamScore} from "@service/exam-score";
+import {ExprScore} from "@service/expr-score";
 
 @Component({
   selector: 'app-student-exam-view',
@@ -14,13 +14,13 @@ import {ExprUserState} from "@service/expr-user-state";
   styleUrls: ['./view.component.less'],
 })
 export class ViewComponent implements OnInit {
-  examUserState: ExamUserState;
-  exprUserStates: ExprUserState[];
+  examUserState: ExamScore;
+  exprUserStates: ExprScore[];
   examLoading = true;
   exprsLoading = true;
 
   constructor(
-    private userStateService: UserStateService,
+    private userStateService: ScoreService,
     private examService: ExamService,
     private activatedRoute: ActivatedRoute
   ) {
@@ -29,7 +29,7 @@ export class ViewComponent implements OnInit {
   ngOnInit(): void {
     this.examLoading = true;
     this.activatedRoute.queryParamMap.pipe(switchMap((queryMap) => {
-      return this.userStateService.getExamUserState(queryMap.get('examId'));
+      return this.userStateService.getExamScoreUS(queryMap.get('examId'));
     })).subscribe((examUserState) => {
       this.examUserState = examUserState;
       this.examLoading = false;
@@ -37,7 +37,7 @@ export class ViewComponent implements OnInit {
 
     this.exprsLoading = true;
     this.activatedRoute.queryParamMap.pipe(switchMap((queryMap) => {
-      return this.userStateService.listExprUserStates(queryMap.get('examId'));
+      return this.userStateService.listExprScoreUSs(queryMap.get('examId'));
     })).subscribe((resp) => {
       this.exprUserStates = resp;
       this.exprsLoading = false;

@@ -13,7 +13,7 @@
   <sv-container *ngIf="expr && exam" size="small" col="2">
     <sv *ngFor="let hostId of expr.hostIds" [label]="'host' + (hostId + 1)">
       <nz-tag *ngIf="hostStats[hostId]" nzColor="success">已连接</nz-tag>
-      <nz-tag *ngIf="!hostStats[hostId]" [nzColor]="'magenta'"> 连接码：{{ exam.id }}-{{ expr.id }}
+      <nz-tag *ngIf="!hostStats[hostId]" nzColor="magenta"> 连接码：{{ exam.id }}-{{ expr.id }}
         -{{ hostId + 1 }} </nz-tag>
     </sv>
   </sv-container>

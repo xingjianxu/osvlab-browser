@@ -7,8 +7,9 @@
   </ng-template>
 </page-header>
 
-<div cdkDropList (cdkDropListDropped)="drop($event)">
-  <nz-card nzTitle="#{{ i + 1 }} {{ step.title }}" [nzExtra]="extraTemplate" *ngFor="let step of this.expr.steps; let i = index" cdkDrag>
+<div id="exprList" cdkDropList (cdkDropListDropped)="drop($event)">
+  <nz-card *ngFor="let step of this.expr.steps; let i = index" cdkDrag
+           nzTitle="#{{ i + 1 }} {{ step.title }}" [nzExtra]="extraTemplate">
     <p>{{ step.description }}</p>
     <ng-template #extraTemplate>
       <a [routerLink]="['..', 'step', 'edit']" [queryParams]="{ stepId: step.id }">编辑</a>

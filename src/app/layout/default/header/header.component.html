@@ -1,7 +1,6 @@
 <div class="alain-default__header-logo">
-  <a [routerLink]="['/']" class="alain-default__header-logo-link">
-    <img class="alain-default__header-logo-expanded" src="./assets/logo-full.svg" alt="{{ app.name }}" style="max-height: 40px;" />
-    <img class="alain-default__header-logo-collapsed" src="./assets/logo.svg" alt="{{ app.name }}" style="max-height: 30px;" />
+  <a [routerLink]="['/']" class="alain-default__header-logo-link" style="color: white;font-weight: bold;font-size: 1.5em;">
+    OSVLab
   </a>
 </div>
 <div class="alain-default__nav-wrap">
@@ -16,10 +15,10 @@
   <ul class="alain-default__nav">
     <li>
       <div
-        class="alain-default__nav-item d-flex align-items-center px-sm"
-        nz-dropdown
-        nzPlacement="bottomRight"
-        [nzDropdownMenu]="roleMenu"
+          class="alain-default__nav-item d-flex align-items-center px-sm"
+          nz-dropdown
+          nzPlacement="bottomRight"
+          [nzDropdownMenu]="roleMenu"
       >
         当前角色: {{ role }}
       </div>

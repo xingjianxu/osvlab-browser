@@ -32,8 +32,8 @@
         <p *ngIf="!examLoading" class="text-lg">{{examUserState.score}}/{{examUserState.exam.fullScore}}</p>
       </div>
       <div nz-col nzXs="24" nzSm="12">
-        <p class="text-grey">订单金额</p>
-        <p class="text-lg">¥ 568.08</p>
+        <p class="text-grey">结束时间</p>
+        <p *ngIf="!examLoading" class="text-lg">{{examUserState.exam.endedAt | dateFormat}}</p>
       </div>
     </div>
   </ng-template>

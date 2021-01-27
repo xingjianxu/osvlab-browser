@@ -6,6 +6,7 @@ import {Exam} from './exam';
 import {Expr} from './expr';
 import {User} from './user';
 import {ScoreStat} from "@service/score-stat";
+import {ExamineeStat} from "@service/examinee-stat";
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +31,7 @@ export class ExamService {
     }));
   }
 
-  get(examId: string) {
+  get(examId: string | number) {
     return this.httpClient.get<{}>('api/exam', {id: examId}).pipe(map((e) => {
         return Exam.fromJSON(e);
       }),
@@ -63,6 +64,10 @@ export class ExamService {
 
   getExaminees(examId: number) {
     return this.httpClient.get<User[]>('api/exam/examinees', {examId});
+  }
+
+  getExamineeStats(examId: number) {
+    return this.httpClient.get<ExamineeStat[]>('api/exam/getExamineeStats', {examId});
   }
 
   addExaminees(examId: number, userGroupIds: number[] | string[]) {

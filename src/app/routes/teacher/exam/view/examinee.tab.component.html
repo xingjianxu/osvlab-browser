@@ -5,20 +5,36 @@
       <span>清空学生</span>
     </button>
   </div>
-  <nz-table #statsTable [nzLoading]="loading" [nzData]="examinees" [nzFrontPagination]="true" nzSize="small" [nzBordered]="true">
+  <nz-table *ngIf="!loading" #statsTable [nzLoading]="loading" [nzData]="examineeStats"
+            [nzFrontPagination]="true" nzSize="small" [nzBordered]="true">
     <thead>
-      <tr>
-        <th nzWidth="200px">学号/用户名</th>
-        <th nzWidth="150px">全名</th>
-        <th></th>
-      </tr>
+    <tr>
+      <th rowSpan="3">学号/用户名</th>
+      <th rowspan="3" nzWidth="200px">全名</th>
+      <th [colSpan]="_exam.hostsCount">登陆情况</th>
+    </tr>
+    <tr>
+      <th *ngFor="let expr of _exam.exprs;let i = index"
+          [colSpan]="expr.hostCount">
+        实验{{i + 1}}
+      </th>
+    </tr>
+    <tr>
+      <ng-container *ngFor="let expr of _exam.exprs">
+        <th *ngFor="let hostId of expr.hostIds" style="width: 80px">Host{{hostId + 1}}</th>
+      </ng-container>
+    </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let examinee of statsTable.data">
-        <td>{{ examinee.username }}</td>
-        <td>{{ examinee.fullName }}</td>
-        <td></td>
-      </tr>
+    <tr *ngFor="let examineeStat of statsTable.data">
+      <td>{{ examineeStat.user.username }}</td>
+      <td>{{ examineeStat.user.fullName }}</td>
+      <td *ngFor="let hostStat of examineeStat.hosts.flat()">
+        <nz-tag [nzColor]="hostStat ? 'success' : 'magenta'">
+          {{hostStat ? '已' : '未'}}连接
+        </nz-tag>
+      </td>
+    </tr>
     </tbody>
   </nz-table>
 </nz-card>

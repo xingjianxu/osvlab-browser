@@ -1,9 +1,12 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { format } from 'date-fns';
+import {Pipe, PipeTransform} from '@angular/core';
+import {format} from 'date-fns';
 
-@Pipe({ name: 'dateFormat' })
+@Pipe({name: 'dateFormat'})
 export class DateFormatPipe implements PipeTransform {
-  transform(value: Date, f = 'yyyy-MM-dd HH:mm:ss'): string {
+  transform(value: string | Date, f = 'yyyy-MM-dd HH:mm:ss'): string {
+    if (!(value instanceof Date)) {
+      value = new Date(value);
+    }
     return format(value, f);
   }
 }

@@ -1,5 +1,5 @@
-import { parseISO } from 'date-fns';
-import { isBefore } from 'date-fns'
+import {parseISO} from 'date-fns';
+import {isBefore} from 'date-fns'
 import {Expr} from './expr';
 import {User} from './user';
 
@@ -26,10 +26,21 @@ export class Exam {
     return this.started && !this.ended;
   }
 
+  get state() {
+    return this.ongoing ? '进行中' : (this.ended ? '已结束' : '未开始')
+  }
+
+  get hostsCount() {
+    return this.exprs.reduce((acc, cur) => {
+      return acc + cur.hostCount;
+    }, 0);
+  }
+
   static fromJSON(data: {}): Exam {
     const exam = Object.assign(new this(), data);
+    exam.exprs = exam.exprs.map(e => Expr.fromJSON(e));
     ['startedAt', 'endedAt', 'createdAt'].forEach((p) => {
-       exam[p] = parseISO(data[p]);
+      exam[p] = parseISO(data[p]);
     });
     return exam;
   }

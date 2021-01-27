@@ -10,8 +10,8 @@ import {Subscription, timer, combineLatest} from 'rxjs';
 import {delay, map, switchMap, take} from 'rxjs/operators';
 import {differenceInSeconds} from 'date-fns';
 import {StompRService} from "@stomp/ng2-stompjs";
-import {UserStateService} from "@service/user-state.service";
-import {StepUserState} from "@service/step-user-state";
+import {ScoreService} from "@service/score.service";
+import {StepScore} from "@service/step-score";
 
 @Component({
   selector: 'app-student-expr-view',
@@ -31,7 +31,7 @@ export class ViewComponent implements OnInit, OnDestroy {
   stepCheckTopic$: Subscription;
 
   constructor(
-    private userStateService: UserStateService,
+    private userStateService: ScoreService,
     private examService: ExamService,
     private exprService: ExprService,
     private stepService: StepService,
@@ -83,7 +83,7 @@ export class ViewComponent implements OnInit, OnDestroy {
         return this.userStateService.getExprHostStates(params.get('examId'), params.get('exprId'));
       })),
       this.activatedRoute.queryParamMap.pipe(switchMap((params) => {
-        return this.userStateService.listStepUserStates(params.get('examId'), params.get('exprId'));
+        return this.userStateService.listStepScoreUSs(params.get('examId'), params.get('exprId'));
       })),
     ]).subscribe(([expr, hostStats, stepScores]) => {
       this.hostStats = hostStats;
@@ -94,7 +94,7 @@ export class ViewComponent implements OnInit, OnDestroy {
     });
   }
 
-  updateStepScore(steps: Step[], stepUserState: StepUserState) {
+  updateStepScore(steps: Step[], stepUserState: StepScore) {
     steps.forEach((step) => {
       if (step.id == stepUserState.stepId) {
         step.score = stepUserState.score;
