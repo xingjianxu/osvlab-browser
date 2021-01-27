@@ -19,6 +19,9 @@ export class ExamViewExprTabComponent implements OnInit {
   @Input()
   set exam(exam: Exam) {
     if (exam.id) {
+      if (exam.id == this._exam?.id) {
+        return;
+      }
       this.loading = true;
       this._exam = exam;
       this.examService.getExprs(exam.id).subscribe((res) => {

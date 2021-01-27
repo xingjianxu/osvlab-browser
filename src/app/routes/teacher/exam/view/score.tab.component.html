@@ -7,6 +7,7 @@
   <sv-container *ngIf="!loading" [col]="5" [gutter]='16' style="margin-bottom: 1em;">
     <sv label="状态" type="success">{{_exam.state}}</sv>
     <sv label="满分">{{_exam.fullScore}}</sv>
+    <sv label="平均分" >{{avgScore}}</sv>
     <sv label="总人数" >{{scoreStats.length}}</sv>
     <sv label="满分人数">{{fullmarkCount}}</sv>
     <sv label="不及格人数" >{{failCount}}</sv>

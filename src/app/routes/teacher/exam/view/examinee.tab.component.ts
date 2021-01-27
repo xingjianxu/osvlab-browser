@@ -20,6 +20,9 @@ export class ExamViewExamineeTabComponent implements OnInit {
   @Input()
   set exam(exam: Exam) {
     if (exam.id) {
+      if (exam.id == this._exam?.id) {
+        return;
+      }
       this.loading = true;
       this._exam = exam;
       this.examService.getExamineeStats(exam.id).subscribe((res) => {

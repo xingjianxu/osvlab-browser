@@ -27,9 +27,17 @@ export class ScoreViewExamineeTabComponent implements OnInit {
     return this.scoreStats.filter(s => s.score >= this._exam.fullScore).length;
   }
 
+  get avgScore() {
+    return (this.scoreStats.reduce((acc, cur) => acc + cur.score, 0) / this.scoreStats.length).toFixed(2);
+  }
+
   @Input()
   set exam(exam: Exam) {
     if (exam.id) {
+      // Maybe a bug of Angular
+      if (exam.id == this._exam?.id) {
+        return;
+      }
       this.loading = true;
       this._exam = exam;
       combineLatest([
