@@ -52,7 +52,7 @@ export class ViewComponent implements OnInit, OnDestroy {
     });
 
     this.activatedRoute.queryParamMap.pipe(switchMap((params) => {
-      return this.examService.get(params.get('examId'));
+      return this.examService.findById(params.get('examId'));
     })).subscribe((exam) => {
       this.exam = exam;
       this.remainTime$?.unsubscribe();

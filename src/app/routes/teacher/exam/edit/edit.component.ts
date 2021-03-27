@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {SFDateWidgetSchema, SFSchema} from '@delon/form';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzModalRef} from 'ng-zorro-antd/modal';
-import {ExamService} from '../../../../service/exam.service';
+import {ExamService} from '@service/exam.service';
 
 @Component({
   selector: 'app-teacher-exam-edit',

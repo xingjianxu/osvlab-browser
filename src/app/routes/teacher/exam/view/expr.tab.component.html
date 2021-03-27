@@ -1,19 +1,27 @@
 <nz-card>
   <div style="margin-bottom: 1em;">
-    <button nz-button nzType="primary" (click)="addExprs()">添加实验</button>
+    <button nz-button nzType="primary" (click)="addExpr()">添加实验</button>
   </div>
-  <nz-table #exprsTable [nzData]="exprs" [nzLoading]="loading">
+  <nz-table #exprsTable [nzData]="_exam?.examExprs" [nzLoading]="loading">
     <thead>
-      <tr>
-        <th>名称</th>
-        <th></th>
-      </tr>
+    <tr>
+      <th nzWidth="80px">序号</th>
+      <th nzWidth="45%">名称</th>
+      <th nzWidth="20%">虚拟机ID前缀</th>
+      <th>操作</th>
+    </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let expr of exprs">
-        <td>{{ expr.title }}</td>
-        <td></td>
-      </tr>
+    <tr *ngFor="let examExpr of exprsTable.data">
+      <td>{{ examExpr.rank + 1 }}</td>
+      <td>{{ examExpr.expr.title }}</td>
+      <td>{{ examExpr.vmIdPrefix }}</td>
+      <td>
+        <a (click)="updateExpr(examExpr)">修改</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a (click)="removeExpr(examExpr.expr.id)">删除</a>
+      </td>
+    </tr>
     </tbody>
   </nz-table>
 </nz-card>

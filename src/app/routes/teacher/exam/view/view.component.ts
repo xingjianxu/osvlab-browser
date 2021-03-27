@@ -20,7 +20,7 @@ export class ViewComponent implements OnInit {
     this.activatedRoute.queryParamMap
       .pipe(
         switchMap((params) => {
-          return this.examService.get(params.get('exam_id'));
+          return this.examService.findById(params.get('exam_id'));
         }),
       )
       .subscribe((exam) => {

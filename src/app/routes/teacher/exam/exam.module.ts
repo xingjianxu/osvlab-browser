@@ -4,7 +4,7 @@ import {EditComponent} from './edit/edit.component';
 import {ExamRoutingModule} from './exam-routing.module';
 import {ListComponent} from './list/list.component';
 import {AddExamineesComponent} from './view/add-examinees/add-examinees.component';
-import {AddExprsComponent} from './view/add-exprs/add-exprs.component';
+import {EditExprComponent} from './view/update-exprs/edit-expr.component';
 import {ExamViewExamineeTabComponent} from './view/examinee.tab.component';
 import {ExamViewExprTabComponent} from './view/expr.tab.component';
 import {ViewComponent} from './view/view.component';
@@ -17,7 +17,7 @@ const COMPONENTS_NOROUNT = [
   EditComponent,
   ExamViewExprTabComponent,
   AddExamineesComponent,
-  AddExprsComponent,
+  EditExprComponent,
   ExamViewExamineeTabComponent,
   ScoreViewExamineeTabComponent,
 ];
