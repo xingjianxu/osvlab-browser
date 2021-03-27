@@ -3,9 +3,9 @@ import { SFSchema, SFSelectWidgetSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { filter, map } from 'rxjs/operators';
-import { ExprService } from '../../../../../service/expr.service';
-import { Exam } from '../../../../../service/exam';
-import { ExamService } from '../../../../../service/exam.service';
+import { ExprService } from '@service/expr.service';
+import { Exam } from '@service/exam';
+import { ExamService } from '@service/exam.service';
 
 @Component({
   selector: 'app-teacher-exam-add-exprs',
@@ -23,7 +23,6 @@ export class AddExprsComponent implements OnInit {
         title: '实验',
         ui: {
           widget: 'select',
-          mode: 'multiple',
           asyncData: () =>
             this.exprService.list().pipe(
               map((exprs) => {
@@ -40,10 +39,14 @@ export class AddExprsComponent implements OnInit {
             ),
         } as SFSelectWidgetSchema,
       },
+      vmIdPrefix: {
+        type: 'string',
+        title: '虚拟机ID前缀',
+      },
     },
-    required: ['exprIds'],
+    required: ['exprIds', 'vmIdPrefix'],
     ui: {
-      spanLabelFixed: 80,
+      spanLabelFixed: 120,
       grid: { span: 24 },
     },
   };

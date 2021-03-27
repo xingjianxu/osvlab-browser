@@ -1,7 +1,7 @@
-import {parseISO} from 'date-fns';
-import {isBefore} from 'date-fns'
-import {Expr} from './expr';
-import {User} from './user';
+import { parseISO } from 'date-fns';
+import { isBefore } from 'date-fns';
+import { Expr } from './expr';
+import { User } from './user';
 
 export class Exam {
   id: number;
@@ -10,9 +10,15 @@ export class Exam {
   startedAt: Date;
   endedAt: Date;
   createdAt: Date;
-  exprs: Expr[];
+  examExprs: [];
   examinees: User[];
   fullScore: number;
+
+  get exprs() {
+    return this.examExprs.map((e) => {
+      return Expr.fromJSON(e['expr']);
+    });
+  }
 
   get started() {
     return isBefore(this.startedAt, new Date());
@@ -27,7 +33,7 @@ export class Exam {
   }
 
   get state() {
-    return this.ongoing ? '进行中' : (this.ended ? '已结束' : '未开始')
+    return this.ongoing ? '进行中' : this.ended ? '已结束' : '未开始';
   }
 
   get hostsCount() {
@@ -38,7 +44,6 @@ export class Exam {
 
   static fromJSON(data: {}): Exam {
     const exam = Object.assign(new this(), data);
-    exam.exprs = exam.exprs.map(e => Expr.fromJSON(e));
     ['startedAt', 'endedAt', 'createdAt'].forEach((p) => {
       exam[p] = parseISO(data[p]);
     });

@@ -3,9 +3,9 @@ import { SFSchema, SFSelectWidgetSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { filter, map } from 'rxjs/operators';
-import { Exam } from '../../../../../service/exam';
-import { ExamService } from '../../../../../service/exam.service';
-import { UserGroupService } from '../../../../../service/user-group.service';
+import { Exam } from '@service/exam';
+import { ExamService } from '@service/exam.service';
+import { UserGroupService } from '@service/user-group.service';
 
 @Component({
   selector: 'app-teacher-exam-add-examinees',
