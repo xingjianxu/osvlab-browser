@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Expr } from '@service/expr';
-import { Exam } from '@service/exam';
-import { switchMap } from 'rxjs/operators';
-import { ModalHelper } from '@delon/theme';
-import { AddExprsComponent } from './add-exprs/add-exprs.component';
-import { ExamService } from '@service/exam.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {Expr} from '@service/expr';
+import {Exam} from '@service/exam';
+import {switchMap} from 'rxjs/operators';
+import {ModalHelper} from '@delon/theme';
+import {AddExprsComponent} from './add-exprs/add-exprs.component';
+import {ExamService} from '@service/exam.service';
 
 @Component({
   selector: 'app-teacher-exam-view-expr-tab',
@@ -31,20 +31,19 @@ export class ExamViewExprTabComponent implements OnInit {
     }
   }
 
-  constructor(private examService: ExamService, private modalHelper: ModalHelper) {}
+  constructor(private examService: ExamService, private modalHelper: ModalHelper) {
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   addExprs() {
-    this.modalHelper
-      .create(AddExprsComponent, { exam: this._exam }, { size: 'md' })
-      .pipe(
-        switchMap((_) => {
-          return this.examService.getExprs(this._exam.id);
-        }),
-      )
-      .subscribe((res) => {
-        this.exprs = res;
-      });
+    this.modalHelper.create(AddExprsComponent, {exam: this._exam}, {size: 'md'}).pipe(
+      switchMap((_) => {
+        return this.examService.getExprs(this._exam.id);
+      }),
+    ).subscribe((res) => {
+      this.exprs = res;
+    });
   }
 }
