@@ -46,8 +46,12 @@ export class EditExprComponent implements OnInit {
         type: 'number',
         title: '虚拟机ID前缀',
       },
+      rank: {
+        type: 'number',
+        title: '排序',
+      },
     },
-    required: ['exprId', 'vmIdPrefix'],
+    required: ['exprId', 'vmIdPrefix', 'rank'],
     ui: {
       spanLabelFixed: 120,
       grid: {span: 24},
@@ -67,18 +71,18 @@ export class EditExprComponent implements OnInit {
 
   save(values: any) {
     this.saveLoading = true;
-    this.examService.updateExpr(this.exam.id, values.exprId, values.vmIdPrefix).subscribe((res) => {
+    this.examService.updateExpr(this.exam.id, values.exprId, values.vmIdPrefix, values.rank).subscribe(() => {
       this.saveLoading = false;
+      if (this.record['id']) {
+        this.msgSrv.success('修改成功!');
+      } else {
+        this.msgSrv.success('添加成功!');
+      }
       this.close(true);
     });
   }
 
   close(r) {
     this.modal.destroy(r);
-    if (this.record['id']) {
-      this.msgSrv.success('修改成功!');
-    } else {
-      this.msgSrv.success('添加成功!');
-    }
   }
 }

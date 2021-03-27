@@ -42,7 +42,7 @@ export class ExamViewExprTabComponent implements OnInit {
   }
 
   updateExpr(e) {
-    this.updateExam(this.modalHelper.create(EditExprComponent, {exam: this._exam, record: {exprId: e.expr.id, ...e}}, {size: 'md'}), '修改成功！');
+    this.updateExam(this.modalHelper.create(EditExprComponent, {exam: this._exam, record: {exprId: e.expr.id, ...e}}, {size: 'md'}));
   }
 
   removeExpr(exprId: number | string) {

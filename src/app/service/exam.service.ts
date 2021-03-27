@@ -49,8 +49,8 @@ export class ExamService {
     return this.httpClient.post<Exam>('api/exam', exam);
   }
 
-  updateExpr(examId: number | string, exprId: number | string, vmIdPrefix: number | string) {
-    return this.httpClient.post<number>('api/exam/updateExpr', {examId, exprId, vmIdPrefix});
+  updateExpr(examId: number | string, exprId: number | string, vmIdPrefix: number | string, rank: number) {
+    return this.httpClient.post<number>('api/exam/updateExpr', {examId, exprId, vmIdPrefix, rank});
   }
 
   removeExpr(examId: number | string, exprId: number | string) {
