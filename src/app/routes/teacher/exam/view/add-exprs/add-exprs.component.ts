@@ -18,7 +18,7 @@ export class AddExprsComponent implements OnInit {
 
   schema: SFSchema = {
     properties: {
-      exprIds: {
+      exprId: {
         type: 'number',
         title: '实验',
         ui: {
@@ -40,11 +40,11 @@ export class AddExprsComponent implements OnInit {
         } as SFSelectWidgetSchema,
       },
       vmIdPrefix: {
-        type: 'string',
+        type: 'number',
         title: '虚拟机ID前缀',
       },
     },
-    required: ['exprIds', 'vmIdPrefix'],
+    required: ['exprId', 'vmIdPrefix'],
     ui: {
       spanLabelFixed: 120,
       grid: { span: 24 },
@@ -62,8 +62,7 @@ export class AddExprsComponent implements OnInit {
 
   save(values: any) {
     this.saveLoading = true;
-    const exprIds = values.exprIds;
-    this.examService.addExprs(this.exam.id, exprIds).subscribe((res) => {
+    this.examService.addExpr(this.exam.id, values.exprId, values.vmIdPrefix).subscribe((res) => {
       this.msgSrv.success('成功添加实验：' + res.toString());
       this.saveLoading = false;
       this.close(res);

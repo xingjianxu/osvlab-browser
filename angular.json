@@ -33,11 +33,10 @@
               }
             ],
             "styles": ["src/styles.less"],
-            "scripts": ["node_modules/ajv/dist/ajv.bundle.js"],
+            "scripts": [],
             "allowedCommonJsDependencies": [
               "/",
               "@",
-              "@angularclass/hmr",
               "@ant-design/colors",
               "@antv/adjust",
               "@antv/attr",
@@ -59,7 +58,9 @@
               "n",
               "r",
               "s",
-              "u"
+              "u",
+              "ajv",
+              "date-fns"
             ]
           },
           "configurations": {
@@ -89,14 +90,6 @@
                   "maximumError": "10kb"
                 }
               ]
-            },
-            "hmr": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.hmr.ts"
-                }
-              ]
             }
           }
         },
@@ -109,10 +102,6 @@
           "configurations": {
             "production": {
               "browserTarget": "osvlab-browser:build:production"
-            },
-            "hmr": {
-              "browserTarget": "osvlab-browser:build:hmr",
-              "hmr": true
             }
           }
         },
@@ -131,7 +120,7 @@
             "karmaConfig": "karma.conf.js",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.less"],
-            "scripts": ["node_modules/ajv/dist/ajv.bundle.js"]
+            "scripts": []
           }
         },
         "lint": {
