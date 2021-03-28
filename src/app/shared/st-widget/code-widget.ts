@@ -27,7 +27,7 @@ export class CodeWidget extends ControlWidget implements OnInit {
       minimap: { enabled: false },
       tabSize: 2,
       lineDecorationsWidth: 10,
-      lineNumbersMinChars: 3,
+      lineNumbersMinChars: 2,
       folding: false,
       codeLens: false,
       padding: { bottom: 5, top: 5 },

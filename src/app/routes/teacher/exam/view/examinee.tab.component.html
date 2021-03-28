@@ -9,9 +9,9 @@
             [nzFrontPagination]="true" nzSize="small" [nzBordered]="true">
     <thead>
     <tr>
-      <th rowSpan="3">学号/用户名</th>
-      <th rowspan="3" nzWidth="200px">全名</th>
-      <th [colSpan]="_exam.hostsCount">登陆情况</th>
+      <th rowSpan="2" nzWidth="150px">学号/用户名</th>
+      <th rowspan="2" nzWidth="150px">全名</th>
+      <th [colSpan]="_exam.hostsCount">实验主机</th>
     </tr>
     <tr>
       <th *ngFor="let expr of _exam.exprs;let i = index"
@@ -19,21 +19,16 @@
         实验{{i + 1}}
       </th>
     </tr>
-    <tr>
-      <ng-container *ngFor="let expr of _exam.exprs">
-        <th *ngFor="let hostId of expr.hostIds" style="width: 80px">Host{{hostId + 1}}</th>
-      </ng-container>
-    </tr>
     </thead>
     <tbody>
     <tr *ngFor="let examineeStat of statsTable.data">
       <td>{{ examineeStat.user.username }}</td>
       <td>{{ examineeStat.user.fullName }}</td>
-      <td *ngFor="let hostStat of examineeStat.hosts.flat()">
-        <nz-tag [nzColor]="hostStat ? 'success' : 'magenta'">
-          {{hostStat ? '已' : '未'}}连接
-        </nz-tag>
-      </td>
+      <ng-container *ngFor="let expr of _exam.exprs">
+        <td *ngFor="let hostId of expr.hostIds" style="width: 80px">
+          <a target="_blank" href="https://virt.bixlab.cn/#v1:0:=qemu%2F8100111::::::8::">Host{{hostId + 1}}</a>
+        </td>
+      </ng-container>
     </tr>
     </tbody>
   </nz-table>

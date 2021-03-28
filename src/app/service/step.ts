@@ -9,10 +9,6 @@ export class Step {
   idx: number;
   checking = false;
 
-  get hostname() {
-    return this.hostId + 1;
-  }
-
   static fromJSON(data: {}): Step {
     return Object.assign(new this(), data);
   }

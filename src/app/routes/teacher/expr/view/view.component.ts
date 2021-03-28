@@ -11,9 +11,10 @@ import {ExprService} from '@service/expr.service';
   templateUrl: './view.component.html',
   styles: [
     `
-        #exprList:active {
+        ::ng-deep .cdk-drag-handle {
             cursor: grabbing;
         }
+
         ::ng-deep .cdk-drag-preview {
             display: table;
         }

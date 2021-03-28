@@ -38,16 +38,6 @@ export class StepEditComponent implements OnInit {
           prefix: 'host',
         } as SFNumberWidgetSchema,
       },
-      refOpts: {
-        type: 'string',
-        title: '参考答案',
-        ui: {
-          widget: 'code',
-          editorOption: {
-            language: 'shell',
-          },
-        },
-      },
       scoreScript: {
         type: 'string',
         title: '判分程序',
@@ -55,6 +45,18 @@ export class StepEditComponent implements OnInit {
           widget: 'code',
           editorOption: {
             language: 'python',
+            dimension: {height: 400}
+          },
+        },
+      },
+      refOpts: {
+        type: 'string',
+        title: '参考答案',
+        ui: {
+          widget: 'code',
+          editorOption: {
+            language: 'shell',
+            dimension: {height: 400}
           },
         },
       },
@@ -95,7 +97,7 @@ export class StepEditComponent implements OnInit {
   }
 
   save(values: any) {
-    this.stepSerice.save({ ...values, hostId: values.hostname - 1 }).subscribe((step) => {
+    this.stepSerice.save({ ...values, hostId: values.hostname }).subscribe((step) => {
       this.msgSrv.success('保存成功');
     });
   }

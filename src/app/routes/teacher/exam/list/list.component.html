@@ -7,14 +7,14 @@
   </ng-template>
 </page-header>
 
-<nz-table #examsTable [nzData]="exams">
+<nz-table #examsTable [nzData]="exams" [nzBordered]="true">
   <thead>
     <tr>
       <th>名称</th>
       <th>描述</th>
       <th>开始时间</th>
       <th>结束时间</th>
-      <th></th>
+      <th>操作</th>
     </tr>
   </thead>
   <tbody>

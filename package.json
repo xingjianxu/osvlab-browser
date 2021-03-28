@@ -45,7 +45,7 @@
     "@types/lodash": "^4.14.168",
     "date-fns": "^2.16.1",
     "lodash": "^4.17.20",
-    "monaco-editor": "^0.21.2",
+    "monaco-editor": "^0.23.0",
     "ng-alain": "^11.8.1",
     "ng-zorro-antd": "~11.2.0",
     "ngx-tinymce": "^11.0.0",

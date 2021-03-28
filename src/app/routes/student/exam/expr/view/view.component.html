@@ -10,13 +10,6 @@
   <ng-template #action>
     <button nz-button nzType="primary" (click)="submitExpr()">提交</button>
   </ng-template>
-  <sv-container *ngIf="expr && exam" size="small" col="2">
-    <sv *ngFor="let hostId of expr.hostIds" [label]="'host' + (hostId + 1)">
-      <nz-tag *ngIf="hostStats[hostId]" nzColor="success">已连接</nz-tag>
-      <nz-tag *ngIf="!hostStats[hostId]" nzColor="magenta"> 连接码：{{ exam.id }}-{{ expr.id }}
-        -{{ hostId + 1 }} </nz-tag>
-    </sv>
-  </sv-container>
   <nz-collapse class="mt-md">
     <nz-collapse-panel
         *ngFor="let step of expr?.steps"
@@ -29,7 +22,6 @@
       </pre>
       <ng-template #extraTpl>
         <button nz-button nzSize="small" nzType="primary"
-                [disabled]="!hostStats[step.hostId]"
                 (click)="checkStep(step, $event)" [nzLoading]="step.checking">
           <i nz-icon nzType="play-circle"></i>
           {{ step.score === undefined ? '-' : step.score }} / {{ step.fullScore }}

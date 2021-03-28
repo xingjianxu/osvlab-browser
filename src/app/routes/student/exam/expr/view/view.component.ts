@@ -21,13 +21,11 @@ import {StepScore} from "@service/step-score";
 export class ViewComponent implements OnInit, OnDestroy {
   exam: Exam;
   expr: Expr;
-  hostStats: [];
   steps: Step[];
   loading = false;
   remainTime: string;
 
   remainTime$: Subscription;
-  hostConnectedTopic$: Subscription;
   stepCheckTopic$: Subscription;
 
   constructor(
@@ -41,10 +39,6 @@ export class ViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.hostConnectedTopic$ = this.stompRService.watch('/user/topic/hostConnected').subscribe((msg) => {
-      this.hostStats = JSON.parse(msg.body);
-    });
-
     this.stepCheckTopic$ = this.stompRService.watch('/user/topic/stepCheck').subscribe((msg) => {
       if (this.expr) {
         this.updateStepScore(this.expr.steps, JSON.parse(msg.body));
@@ -80,13 +74,9 @@ export class ViewComponent implements OnInit, OnDestroy {
         return this.exprService.get(params.get('exprId'));
       })),
       this.activatedRoute.queryParamMap.pipe(switchMap((params) => {
-        return this.userStateService.getExprHostStates(params.get('examId'), params.get('exprId'));
-      })),
-      this.activatedRoute.queryParamMap.pipe(switchMap((params) => {
         return this.userStateService.listStepScores(params.get('examId'), params.get('exprId'));
       })),
-    ]).subscribe(([expr, hostStats, stepScores]) => {
-      this.hostStats = hostStats;
+    ]).subscribe(([expr, stepScores]) => {
       stepScores.forEach((stepScore) => {
         this.updateStepScore(expr.steps, stepScore);
       });
@@ -114,6 +104,6 @@ export class ViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.hostConnectedTopic$.unsubscribe();
+    this.stepCheckTopic$.unsubscribe();
   }
 }

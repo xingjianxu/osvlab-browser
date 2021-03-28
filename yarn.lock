@@ -7429,10 +7429,10 @@ mockjs@^1.1.0:
   dependencies:
     commander "*"
 
-monaco-editor@^0.21.2:
-  version "0.21.3"
-  resolved "https://registry.npm.taobao.org/monaco-editor/download/monaco-editor-0.21.3.tgz#3381b66614b64d1c5e3b77dd5564ad496d1b4e5d"
-  integrity sha1-M4G2ZhS2TRxeO3fdVWStSW0bTl0=
+monaco-editor@^0.23.0:
+  version "0.23.0"
+  resolved "https://registry.npm.taobao.org/monaco-editor/download/monaco-editor-0.23.0.tgz#24844ba5640c7adb3a2a3ff3b520cf2d7170a6f0"
+  integrity sha1-JIRLpWQMets6Kj/ztSDPLXFwpvA=
 
 move-concurrently@^1.0.1:
   version "1.0.1"

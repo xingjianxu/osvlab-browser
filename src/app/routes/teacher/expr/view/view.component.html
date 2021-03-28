@@ -12,7 +12,11 @@
            nzTitle="#{{ i + 1 }} {{ step.title }}" [nzExtra]="extraTemplate">
     <p>{{ step.description }}</p>
     <ng-template #extraTemplate>
+      <nz-tag nzColor="success">Host{{step.hostId}}</nz-tag>
+      <nz-divider nzType="vertical"></nz-divider>
       <a [routerLink]="['..', 'step', 'edit']" [queryParams]="{ stepId: step.id }">编辑</a>
+      <nz-divider nzType="vertical"></nz-divider>
+      <i nz-icon nzType="drag" nzTheme="outline" cdkDragHandle></i>
     </ng-template>
   </nz-card>
 </div>

@@ -26,10 +26,6 @@ export class ScoreService {
     }));
   }
 
-  getExprHostStates(examId: number | string, exprId: number | string) {
-    return this.httpClient.get<[]>('api/exam/score/listExprHostStates', {examId, exprId});
-  }
-
   listStepScores(examId: number | string, exprId: number | string) {
     return this.httpClient.get<[]>('api/exam/score/listStepScores', {examId, exprId});
   }
