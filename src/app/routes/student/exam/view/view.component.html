@@ -26,7 +26,7 @@
   </ng-template>
 
   <ng-template #extra>
-    <sv-container>
+    <sv-container *ngIf="!!examScore">
       <sv label="考试状态">{{examScore.exam.state}}</sv>
       <sv label="当前分数">{{examScore.exam.fullScore}}</sv>
       <sv label="当前分数">{{examScore.score}}</sv>
