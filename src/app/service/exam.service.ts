@@ -88,4 +88,8 @@ export class ExamService {
   scoreStats(examId: number | string) {
     return this.httpClient.get<ScoreStat[]>('api/exam/scoreStats', {examId});
   }
+
+  getExprHostVncProxy(examId: string, exprId: string, hostId: string | number) {
+    return this.httpClient.get<[]>('api/exam/getExprHostVncProxy', {examId, exprId, hostId});
+  }
 }

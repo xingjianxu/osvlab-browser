@@ -48,6 +48,7 @@
     "monaco-editor": "^0.23.0",
     "ng-alain": "^11.8.1",
     "ng-zorro-antd": "~11.2.0",
+    "ngx-countdown": "^11.0.1",
     "ngx-tinymce": "^11.0.0",
     "ngx-ueditor": "^11.0.0",
     "rxjs": "~6.6.3",
@@ -57,8 +58,7 @@
     "typescript-tslint-plugin": "^0.5.5",
     "xterm": "^4.8.1",
     "xterm-addon-fit": "^0.4.0",
-    "zone.js": "~0.10.3",
-    "ngx-countdown": "^11.0.1"
+    "zone.js": "~0.10.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1102.6",
@@ -69,6 +69,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/jszip": "^3.1.7",
     "@types/node": "^12.11.1",
+    "eslint": "^7.23.0",
     "husky": "^4.2.3",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
@@ -77,10 +78,13 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "ng-alain": "^11.8.1",
     "ng-alain-codelyzer": "^0.0.1",
+    "ng-alain-sts": "^0.0.1",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
     "protractor": "~7.0.0",
+    "source-map-explorer": "^2.5.1",
     "stylelint": "^13.3.1",
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-config-rational-order": "^0.1.2",
@@ -88,13 +92,9 @@
     "stylelint-declaration-block-no-ignored-properties": "^2.3.0",
     "stylelint-order": "^4.0.0",
     "ts-node": "^9.1.1",
-    "eslint": "^7.23.0",
     "tslint-config-prettier": "^1.18.0",
     "webpack-bundle-analyzer": "^3.6.1",
-    "xlsx": "^0.16.1",
-    "ng-alain": "^11.8.1",
-    "source-map-explorer": "^2.5.1",
-    "ng-alain-sts": "^0.0.1"
+    "xlsx": "^0.16.1"
   },
   "husky": {
     "hooks": {

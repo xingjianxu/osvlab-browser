@@ -27,9 +27,8 @@
 
   <ng-template #extra>
     <sv-container *ngIf="!!examScore">
-      <sv label="考试状态">{{examScore.exam.state}}</sv>
-      <sv label="当前分数">{{examScore.exam.fullScore}}</sv>
-      <sv label="当前分数">{{examScore.score}}</sv>
+      <sv label="考试状态" col="2">{{examScore.exam.state}}</sv>
+      <sv label="当前分数" col="2">{{examScore.score}}/{{examScore.exam.fullScore}}</sv>
       <sv label="结束时间" col="2">{{examScore.exam.endedAt | dateFormat}}</sv>
     </sv-container>
   </ng-template>

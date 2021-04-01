@@ -1,25 +1,19 @@
-<page-header [title]="expr?.title" [action]="action" [breadcrumb]="breadcrumb">
-  <ng-template #breadcrumb>
-    <nz-breadcrumb *ngIf="exam != null">
-      <nz-breadcrumb-item>
-        <a [routerLink]="['../..', 'view']" [queryParams]="{ examId: exam.id }">测试：{{ exam.title }}</a>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item> 剩余时间: {{ remainTime }} </nz-breadcrumb-item>
-    </nz-breadcrumb>
-  </ng-template>
-  <ng-template #action>
-    <button nz-button nzType="primary" (click)="submitExpr()">提交</button>
-  </ng-template>
-  <nz-collapse class="mt-md">
-    <nz-collapse-panel
-        *ngFor="let step of expr?.steps"
-        [nzHeader]="'#' + (step.idx + 1) + ' ' + step.title"
-        [nzActive]="true"
-        [nzExtra]="extraTpl"
-    >
-      <pre>
-        {{ step.description }}
-      </pre>
+<div class="sidebar" xmlns="http://www.w3.org/1999/html">
+  <nz-breadcrumb *ngIf="!!exam && !!expr">
+    <nz-breadcrumb-item>
+      <a [routerLink]="['../..', 'view']" [queryParams]="{ examId: exam.id }">测试：{{ exam.title }}</a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      实验：{{ expr.title }}
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item> 剩余时间: {{ remainTime }} </nz-breadcrumb-item>
+  </nz-breadcrumb>
+  <div class="steps">
+    <nz-card *ngFor="let step of expr?.steps"
+             [class.active]="activeStepId == step.id"
+             [nzTitle]="'#' + (step.idx + 1) + ' ' + step.title"
+             [nzExtra]="extraTpl" [nzHoverable]="true" nzSize="small" (click)="setActiveStep(step.id)">
+      {{ step.description }}
       <ng-template #extraTpl>
         <button nz-button nzSize="small" nzType="primary"
                 (click)="checkStep(step, $event)" [nzLoading]="step.checking">
@@ -27,6 +21,27 @@
           {{ step.score === undefined ? '-' : step.score }} / {{ step.fullScore }}
         </button>
       </ng-template>
-    </nz-collapse-panel>
-  </nz-collapse>
-</page-header>
+    </nz-card>
+  </div>
+</div>
+
+<div class="content">
+  <div class="toolbar">
+    当前主机：
+    <nz-tag nzColor="processing">Host{{currentHost}}</nz-tag>
+    <nz-divider nzType="vertical"></nz-divider>
+    <button nz-button nzSize="small" nzType="primary">启动</button>
+    <nz-divider nzType="vertical"></nz-divider>
+    <button nz-button nzSize="small" nzDanger>重置</button>
+
+    <div style="float: right;display: inline;">
+      连接主机：
+      <button *ngFor="let host of expr?.hostIds"
+              (click)="connectHostVnc(host+1)"
+              nz-button nzSize="small" nzType="primary">
+        Host{{host + 1}}
+      </button>
+    </div>
+  </div>
+  <div #vnc class="vnc-container"></div>
+</div>

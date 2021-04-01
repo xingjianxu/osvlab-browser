@@ -35,14 +35,14 @@ export class StartupService {
 
   private initStomp(token: string) {
     this.stompRService.config = {
-      url: 'ws://127.0.0.1:8080/api/ws',
+      url: 'ws://127.0.0.1:8080/api/ws/stomp',
       headers: {
         token,
       },
       heartbeat_in: 2000, // Typical value 0 - disabled
       heartbeat_out: 2000, // Typical value 20000 - every 20 seconds
       reconnect_delay: 2000,
-      debug: true
+      debug: false
     };
     this.stompRService.initAndConnect();
   }

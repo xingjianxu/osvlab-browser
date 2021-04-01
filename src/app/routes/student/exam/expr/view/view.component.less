@@ -1,4 +1,66 @@
 :host-context {
   display: block;
-  margin: 75px 100px 0;
+  width: 1665px;
+  margin: 75px auto;
+}
+
+.sidebar {
+  width: 600px;
+  background-color: white;
+  border: 1px solid #ddd;
+  float: left;
+
+  nz-breadcrumb {
+    margin: 10px 16px;
+  }
+
+  .steps {
+    height: calc(max(100vh - 128px, 785px));
+    margin-top: 10px;
+    overflow-y: scroll;
+    border-top: 1px solid #ddd;
+
+    nz-card {
+      margin-bottom: 1em;
+      border-left: none;
+      border-right: none;
+      border-radius: 0;
+
+      &:first-of-type {
+        border-top: none;
+      }
+
+      &:last-of-type {
+        margin-bottom: 0;
+        border-bottom: none;
+      }
+
+      &.active {
+        border-color: transparent;
+        box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.09), 0 3px 6px 0 rgba(0, 0, 0, 0.12), 0 0 12px 6px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+}
+
+.content {
+  float: left;
+  height: calc(max(100vh - 84px, 829px));
+  background-color: white;
+  border: 1px solid #ddd;
+  border-left: none;
+  .toolbar {
+    line-height: 42px;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-bottom: 1px solid #ddd;
+  }
+}
+
+.vnc-container {
+  flex: 1;
+  width: 1024px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
