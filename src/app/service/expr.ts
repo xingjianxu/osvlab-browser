@@ -8,7 +8,7 @@ export class Expr {
   score: number;
 
   get hostIds() {
-    return [...new Array(this.hostCount).keys()];
+    return [...new Array(this.hostCount+1).keys()].slice(1);
   }
 
   static fromJSON(data: {}): Expr {

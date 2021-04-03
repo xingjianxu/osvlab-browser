@@ -12,9 +12,10 @@ import {differenceInSeconds} from 'date-fns';
 import {StompRService} from "@stomp/ng2-stompjs";
 import {ScoreService} from "@service/score.service";
 import {StepScore} from "@service/step-score";
-import RFB from '@novnc/novnc/core/rfb.js';
+import RFB from '@novnc/novnc/core/rfb';
 import {DA_SERVICE_TOKEN, ITokenService} from "@delon/auth";
 import {PveService} from "@service/pve.service";
+import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
   selector: 'app-student-expr-view',
@@ -37,6 +38,8 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   currentHost = 1;
   rfb: RFB;
+  hostStarting = false;
+  hostStopping = false;
 
   constructor(
     private userStateService: ScoreService,
@@ -45,6 +48,7 @@ export class ViewComponent implements OnInit, OnDestroy {
     private stepService: StepService,
     private pveService: PveService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
+    private messageService: NzMessageService,
     private activatedRoute: ActivatedRoute,
     private stompRService: StompRService,
   ) {
@@ -134,14 +138,45 @@ export class ViewComponent implements OnInit, OnDestroy {
     this.currentHost = host;
     this.rfb?.disconnect();
     this.pveService.getVmVncConnection(this.exam.id, this.expr.id, this.currentHost).subscribe((conn) => {
+      if (conn.ticket == '') {
+        return;
+      }
       this.rfb = new RFB(
         this.vncElm.nativeElement,
-        'ws://localhost:8080/api/ws/vnc?' + conn.ticket,
+        ViewComponent.getVncWsUrl(conn.ticket),
         {credentials: {password: conn.password}}
       );
       this.rfb.addEventListener('disconnect', () => {
         this.rfb = null;
+        this.hostStopping = false;
       });
+    });
+  }
+
+  private static getVncWsUrl(ticket: string): string {
+    let url;
+    if (window.location.protocol === "https:") {
+      url = 'wss';
+    } else {
+      url = 'ws';
+    }
+    url += '://' + window.location.hostname;
+    url += ':' + window.location.port;
+    return url + '/api/ws/vnc?' + ticket;
+  }
+
+  startHost() {
+    this.hostStarting = true;
+    this.pveService.startVm(this.exam.id, this.expr.id, this.currentHost).subscribe(() => {
+      this.hostStarting = false;
+      this.connectHostVnc(this.currentHost);
+    });
+  }
+
+  stopHost() {
+    this.hostStopping = true;
+    this.pveService.stopVm(this.exam.id, this.expr.id, this.currentHost).subscribe(() => {
+      this.messageService.success('成功发出停机指令！');
     });
   }
 }
