@@ -17,6 +17,7 @@ import {DA_SERVICE_TOKEN, ITokenService} from "@delon/auth";
 import {PveService} from "@service/pve.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {RC} from "@service/RC";
+import {TitleService} from "@delon/theme";
 
 @Component({
   selector: 'app-student-expr-view',
@@ -50,6 +51,7 @@ export class ViewComponent implements OnInit, OnDestroy {
     private pveService: PveService,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     private messageService: NzMessageService,
+    private titleService: TitleService,
     private activatedRoute: ActivatedRoute,
     private stompRService: StompRService,
   ) {
@@ -78,6 +80,7 @@ export class ViewComponent implements OnInit, OnDestroy {
       });
       this.expr = expr;
       this.exam = exam;
+      this.titleService.setTitle(`实验: ${expr.title}`)
       this.setRemainTimer();
       this.connectHostVnc(this.currentHost);
     });
