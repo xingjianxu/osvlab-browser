@@ -12,11 +12,15 @@
     <nz-card *ngFor="let step of expr?.steps"
              [class.active]="activeStepId == step.id"
              [nzTitle]="'#' + (step.idx + 1) + ' ' + step.title"
-             [nzExtra]="extraTpl" [nzHoverable]="true" nzSize="small" (click)="setActiveStep(step.id)">
+             [nzExtra]="extraTpl"
+             [nzHoverable]="true"
+             nzSize="small"
+             (click)="setActiveStep(step.id)">
       {{ step.description }}
       <ng-template #extraTpl>
         <button nz-button nzSize="small" nzType="primary"
-                (click)="checkStep(step, $event)" [nzLoading]="step.checking">
+                (click)="checkStep(step, $event)"
+                [nzLoading]="step.checking">
           <i nz-icon nzType="play-circle"></i>
           {{ step.score === undefined ? '-' : step.score }} / {{ step.fullScore }}
         </button>
@@ -44,7 +48,6 @@
     </button>
     <nz-divider nzType="vertical"></nz-divider>
     <button nz-button nzSize="small" nzDanger>重置</button>
-
   </div>
   <div #vnc class="vnc-container">
     <nz-empty *ngIf="!rfb" nzNotFoundContent="暂未开机"></nz-empty>

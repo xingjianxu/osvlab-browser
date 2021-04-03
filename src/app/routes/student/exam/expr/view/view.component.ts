@@ -16,6 +16,7 @@ import RFB from '@novnc/novnc/core/rfb';
 import {DA_SERVICE_TOKEN, ITokenService} from "@delon/auth";
 import {PveService} from "@service/pve.service";
 import {NzMessageService} from "ng-zorro-antd/message";
+import {RC} from "@service/RC";
 
 @Component({
   selector: 'app-student-expr-view',
@@ -115,7 +116,18 @@ export class ViewComponent implements OnInit, OnDestroy {
   checkStep(step: Step, e) {
     e.stopPropagation();
     step.checking = true;
-    this.userStateService.checkStep(this.exam.id, step.id).subscribe(() => {
+    this.userStateService.checkStep(this.exam.id, step.id).subscribe((r) => {
+      switch (r.code) {
+        case RC.VM_STOPPED:
+          this.messageService.error('主机未开机，开机后方可评分！');
+          break;
+        case RC.UNKNOWN:
+          this.messageService.error('评分时发生未知错误，请检查主机状态！');
+          break;
+      }
+      if (!r.success) {
+        step.checking = false;
+      }
     });
   }
 
@@ -137,10 +149,11 @@ export class ViewComponent implements OnInit, OnDestroy {
   connectHostVnc(host: number) {
     this.currentHost = host;
     this.rfb?.disconnect();
-    this.pveService.getVmVncConnection(this.exam.id, this.expr.id, this.currentHost).subscribe((conn) => {
-      if (conn.ticket == '') {
+    this.pveService.getVmVncConnection(this.exam.id, this.expr.id, this.currentHost).subscribe((r) => {
+      if (r.code == RC.VM_STOPPED) {
         return;
       }
+      const conn = r.data;
       this.rfb = new RFB(
         this.vncElm.nativeElement,
         ViewComponent.getVncWsUrl(conn.ticket),

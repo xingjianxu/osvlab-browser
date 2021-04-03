@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {_HttpClient} from '@delon/theme';
+import {map} from "rxjs/operators";
+import {R} from "@service/R";
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +11,9 @@ export class PveService {
   }
 
   getVmVncConnection(examId: number, exprId: number, hostId: number) {
-    return this.httpClient.get<{ticket: string, password: string}>('api/pve/getVmVncConnection', {examId, exprId, hostId});
+    return this.httpClient.get('api/pve/getVmVncConnection', {examId, exprId, hostId}).pipe(map((resp) => {
+      return new R<{ticket: string, password: string}>(resp);
+    }));
   }
 
   startVm(examId: number, exprId: number, hostId: number) {
@@ -18,5 +22,9 @@ export class PveService {
 
   stopVm(examId: number, exprId: number, hostId: number) {
     return this.httpClient.post('api/pve/stopVm', {examId, exprId, hostId});
+  }
+
+  getVmStatus(examId: number, exprId: number, hostId: number) {
+    return this.httpClient.post<string>('api/pve/getVmStatus', {examId, exprId, hostId});
   }
 }

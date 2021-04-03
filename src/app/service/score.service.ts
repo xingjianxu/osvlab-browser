@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {_HttpClient} from '@delon/theme';
-import {Expr} from './expr';
 import {map} from 'rxjs/operators';
 import {ExamScore} from "@service/exam-score";
 import {ExprScore} from "@service/expr-score";
+import {R} from "@service/R";
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +31,8 @@ export class ScoreService {
   }
 
   checkStep(examId: string | number, stepId: string | number) {
-    return this.httpClient.get<number>('api/exam/score/checkStep', { examId, stepId });
+    return this.httpClient.get<{}>('api/exam/score/checkStep', {examId, stepId}).pipe(map((resp) => {
+      return new R(resp);
+    }));
   }
 }
