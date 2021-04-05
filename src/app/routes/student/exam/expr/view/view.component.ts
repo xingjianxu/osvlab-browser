@@ -7,7 +7,7 @@ import {ExprService} from '@service/expr.service';
 import {Step} from '@service/step';
 import {StepService} from '@service/step.service';
 import {Subscription, timer, combineLatest} from 'rxjs';
-import {delay, map, switchMap, take} from 'rxjs/operators';
+import {map, switchMap, take} from 'rxjs/operators';
 import {differenceInSeconds} from 'date-fns';
 import {StompRService} from "@stomp/ng2-stompjs";
 import {ScoreService} from "@service/score.service";

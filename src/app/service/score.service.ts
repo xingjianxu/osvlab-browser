@@ -3,7 +3,7 @@ import {_HttpClient} from '@delon/theme';
 import {map} from 'rxjs/operators';
 import {ExamScore} from "@service/exam-score";
 import {ExprScore} from "@service/expr-score";
-import {R} from "@service/R";
+import {R} from "@service/r";
 
 @Injectable({
   providedIn: 'root',

@@ -6,7 +6,8 @@ import {Exam} from './exam';
 import {Expr} from './expr';
 import {User} from './user';
 import {ScoreStat} from '@service/score-stat';
-import {ExamineeStat} from '@service/examinee-stat';
+import {ExamUserLink} from '@service/exam-user-link';
+import {R} from "@service/r";
 
 @Injectable({
   providedIn: 'root',
@@ -25,13 +26,11 @@ export class ExamService {
     );
   }
 
-  listCurrentUserExams(): Observable<Exam[]> {
-    return this.httpClient.get<any[]>('api/exam/listCurrentUserExams').pipe(
+  listCurrentUserExams(): Observable<R<ExamUserLink[]>> {
+    return this.httpClient.get<[]>('api/exam/listCurrentUserExams').pipe(
       map((resp) => {
-        return resp.map((e) => {
-          return Exam.fromJSON(e);
-        });
-      }),
+        return new R(resp, (o) => o.map((e) => ExamUserLink.fromJson(e)));
+      })
     );
   }
 
@@ -67,20 +66,20 @@ export class ExamService {
     );
   }
 
-  getExaminees(examId: number) {
-    return this.httpClient.get<User[]>('api/exam/examinees', {examId});
+  getExamUserLinks(examId: number) {
+    return this.httpClient.get<ExamUserLink[]>('api/exam/getExamUserLinks', {examId});
   }
 
-  getExamineeStats(examId: number) {
-    return this.httpClient.get<ExamineeStat[]>('api/exam/getExamineeStats', {examId});
+  addUsers(examId: number, userGroupIds: number[] | string[]) {
+    return this.httpClient.post<number>('api/exam/addUsers', {examId, userGroupIds});
   }
 
-  addExaminees(examId: number, userGroupIds: number[] | string[]) {
-    return this.httpClient.post<number>('api/exam/examinees', {examId, userGroupIds});
-  }
-
-  removeAllExaminees(examId: number | string) {
-    return this.httpClient.delete<number>('api/exam/examinees', {examId});
+  removeAllUsers(examId: number | string) {
+    return this.httpClient.delete<R<void>>('api/exam/removeAllUsers', {examId}).pipe(
+      map((resp) => {
+        return new R(resp);
+      })
+    );
   }
 
   scoreStats(examId: number | string) {

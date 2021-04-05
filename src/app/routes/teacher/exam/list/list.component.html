@@ -20,7 +20,7 @@
   <tbody>
     <tr *ngFor="let exam of examsTable.data">
       <td>
-        <a [routerLink]="['..', 'view']" [queryParams]="{ exam_id: exam.id, tab: 'examinee' }">{{ exam.title }}</a>
+        <a [routerLink]="['..', 'view']" [queryParams]="{ examId: exam.id, tab: 'users' }">{{ exam.title }}</a>
       </td>
       <td>{{ exam.description }}</td>
       <td>{{ exam['startedAt'] | dateFormat }}</td>

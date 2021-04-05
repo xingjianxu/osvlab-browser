@@ -2,15 +2,15 @@
   <ng-template #tabset>
     <nz-tabset style="padding-bottom: 10px;" nzLinkRouter>
       <nz-tab>
-        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'expr' }" queryParamsHandling="merge">实验</a>
+        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'exprs' }" queryParamsHandling="merge">实验</a>
         <ng-template nz-tab>
-          <app-teacher-exam-view-expr-tab [exam]="exam"></app-teacher-exam-view-expr-tab>
+          <app-teacher-exam-view-exprs-tab [exam]="exam"></app-teacher-exam-view-exprs-tab>
         </ng-template>
       </nz-tab>
       <nz-tab>
-        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'examinee' }" queryParamsHandling="merge">考生</a>
+        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'users' }" queryParamsHandling="merge">考生</a>
         <ng-template nz-tab>
-          <app-teacher-exam-view-examinee-tab [exam]="exam"></app-teacher-exam-view-examinee-tab>
+          <app-teacher-exam-view-users-tab [exam]="exam"></app-teacher-exam-view-users-tab>
         </ng-template>
       </nz-tab>
       <nz-tab>

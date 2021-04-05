@@ -2,6 +2,7 @@ import { parseISO } from 'date-fns';
 import { isBefore } from 'date-fns';
 import { Expr } from './expr';
 import { User } from './user';
+import {ExamUserLink} from "@service/exam-user-link";
 
 export class Exam {
   id: number;
@@ -11,7 +12,7 @@ export class Exam {
   endedAt: Date;
   createdAt: Date;
   examExprs: [];
-  examinees: User[];
+  examUserLinks: ExamUserLink[];
   fullScore: number;
 
   get exprs() {

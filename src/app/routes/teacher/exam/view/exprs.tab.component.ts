@@ -9,10 +9,10 @@ import {NzNotificationService} from "ng-zorro-antd/notification";
 import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
-  selector: 'app-teacher-exam-view-expr-tab',
-  templateUrl: './expr.tab.component.html',
+  selector: 'app-teacher-exam-view-exprs-tab',
+  templateUrl: './exprs.tab.component.html',
 })
-export class ExamViewExprTabComponent implements OnInit {
+export class ExamViewExprsTabComponent implements OnInit {
   loading = true;
 
   _exam: Exam;

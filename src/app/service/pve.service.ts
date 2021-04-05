@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {_HttpClient} from '@delon/theme';
 import {map} from "rxjs/operators";
-import {R} from "@service/R";
+import {R} from "@service/r";
 
 @Injectable({
   providedIn: 'root',

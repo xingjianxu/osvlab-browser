@@ -2,29 +2,30 @@
   <ng-template #tab>
     <nz-tabset>
       <nz-tab nzTitle="当前测试">
-        <nz-table [nzData]="exams" [nzLoading]="loading" [nzShowPagination]="false">
+        <nz-table #examsTable [nzData]="examUserLinks" [nzLoading]="loading" [nzShowPagination]="false">
           <thead>
           <tr>
             <th>名称</th>
             <th>结束时间</th>
+            <th>座位号</th>
             <th>状态</th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let exam of exams">
+          <tr *ngFor="let examUserLink of examsTable.data">
             <td>
-              {{ exam.title }}
+              {{ examUserLink.exam.title }}
             </td>
-            <td>{{ exam.endedAt | dateFormat}}</td>
+            <td>{{ examUserLink.exam.endedAt | dateFormat}}</td>
+            <td>{{ examUserLink.seat }}</td>
             <td>
-              <span *ngIf="!exam.started">未开始</span>
-              <span *ngIf="exam.ended">已结束</span>
-              <a
-                  *ngIf="exam.ongoing"
-                  [routerLink]="['..', 'view']"
-                  [queryParams]="{ examId: exam.id }"
-              >正在进行</a
-              >
+              <span *ngIf="!examUserLink.exam.started">未开始</span>
+              <span *ngIf="examUserLink.exam.ended">已结束</span>
+              <a *ngIf="examUserLink.exam.ongoing"
+                 [routerLink]="['..', 'view']"
+                 [queryParams]="{ examId: examUserLink.exam.id }">
+                正在进行
+              </a>
             </td>
           </tr>
           </tbody>

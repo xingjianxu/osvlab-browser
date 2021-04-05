@@ -6,13 +6,14 @@ import {ExamService} from '@service/exam.service';
 import {User} from '@service/user';
 import {combineLatest} from "rxjs";
 import {ScoreStat} from "@service/score-stat";
+import {ExamUserLink} from "@service/exam-user-link";
 
 @Component({
   selector: 'app-teacher-exam-view-score-tab',
   templateUrl: './score.tab.component.html',
 })
 export class ScoreViewExamineeTabComponent implements OnInit {
-  examinees: User[];
+  userLinks: ExamUserLink[];
   scoreStats: ScoreStat[];
   loading = true;
 
@@ -42,10 +43,10 @@ export class ScoreViewExamineeTabComponent implements OnInit {
       this._exam = exam;
       combineLatest([
         this.examService.scoreStats(exam.id),
-        this.examService.getExaminees(exam.id)
-      ]).subscribe(([scoreStats, examinees]) => {
+        this.examService.getExamUserLinks(exam.id)
+      ]).subscribe(([scoreStats, userLinks]) => {
         this.scoreStats = scoreStats;
-        this.examinees = examinees;
+        this.userLinks = userLinks;
         this.loading = false;
       })
     }
