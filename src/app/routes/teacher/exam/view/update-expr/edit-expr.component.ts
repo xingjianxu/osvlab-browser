@@ -42,16 +42,20 @@ export class EditExprComponent implements OnInit {
           },
         } as SFSelectWidgetSchema,
       },
+      templateVmIdPrefix: {
+        type: 'number',
+        title: '模板VMID前缀',
+      },
       vmIdPrefix: {
         type: 'number',
-        title: '虚拟机ID前缀',
+        title: 'VMID前缀',
       },
       rank: {
         type: 'number',
         title: '排序',
       },
     },
-    required: ['exprId', 'vmIdPrefix', 'rank'],
+    required: ['exprId', 'templateVmIdPrefix', 'vmIdPrefix', 'rank'],
     ui: {
       spanLabelFixed: 120,
       grid: {span: 24},
@@ -71,7 +75,7 @@ export class EditExprComponent implements OnInit {
 
   save(values: any) {
     this.saveLoading = true;
-    this.examService.updateExpr(this.exam.id, values.exprId, values.vmIdPrefix, values.rank).subscribe(() => {
+    this.examService.saveExpr(this.exam.id, values).subscribe(() => {
       this.saveLoading = false;
       if (this.record['id']) {
         this.msgSrv.success('修改成功!');

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SFSchema } from '@delon/form';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef } from 'ng-zorro-antd/modal';
-import { ExprService } from '../../../../service/expr.service';
+import { ExprService } from '@service/expr.service';
 
 @Component({
   selector: 'app-teacher-expr-edit',

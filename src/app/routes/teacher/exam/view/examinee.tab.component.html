@@ -26,7 +26,7 @@
       <td>{{ examineeStat.user.fullName }}</td>
       <ng-container *ngFor="let expr of _exam.exprs">
         <td *ngFor="let hostId of expr.hostIds" style="width: 80px">
-          <a target="_blank" href="https://virt.bixlab.cn/#v1:0:=qemu%2F8100111::::::8::">Host{{hostId + 1}}</a>
+          <a target="_blank" href="https://virt.bixlab.cn/#v1:0:=qemu%2F8100111::::::8::">Host{{hostId}}</a>
         </td>
       </ng-container>
     </tr>

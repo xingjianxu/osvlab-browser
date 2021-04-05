@@ -1,4 +1,16 @@
-<page-header title="实验: {{ expr.title }}" [action]="action">
+<page-header title="实验: {{ expr.title }}" [action]="action" [breadcrumb]="breadcrumb">
+  <ng-template #breadcrumb>
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <a [routerLink]="['/', 'teacher', 'expr']">实验</a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        <a [routerLink]="['/', 'teacher', 'expr', 'view']" [queryParams]="{ exprId: expr?.id }">
+          {{ expr?.title }}
+        </a>
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </ng-template>
   <ng-template #action>
     <a nz-button [routerLink]="['..', 'step', 'edit']" [queryParams]="{ exprId: expr.id }" [nzType]="'primary'">
       <i nz-icon nzType="plus"></i>

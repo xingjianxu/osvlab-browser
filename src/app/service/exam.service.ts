@@ -49,8 +49,8 @@ export class ExamService {
     return this.httpClient.post<Exam>('api/exam', exam);
   }
 
-  updateExpr(examId: number | string, exprId: number | string, vmIdPrefix: number | string, rank: number) {
-    return this.httpClient.post<number>('api/exam/updateExpr', {examId, exprId, vmIdPrefix, rank});
+  saveExpr(examId: number | string, examExpr) {
+    return this.httpClient.post<number>('api/exam/saveExpr', {examId, ...examExpr});
   }
 
   removeExpr(examId: number | string, exprId: number | string) {
@@ -58,15 +58,13 @@ export class ExamService {
   }
 
   getCurrentUserExprs(examId: number | string) {
-    return this.httpClient
-      .get<{ expr: Expr; score: number }[]>('api/exam/currentUserExprs', {examId})
-      .pipe(
-        map((resp) => {
-          return resp.map((e) => {
-            return Expr.fromJSON({...e.expr, score: e.score});
-          });
-        }),
-      );
+    return this.httpClient.get<{ expr: Expr; score: number }[]>('api/exam/currentUserExprs', {examId}).pipe(
+      map((resp) => {
+        return resp.map((e) => {
+          return Expr.fromJSON({...e.expr, score: e.score});
+        });
+      }),
+    );
   }
 
   getExaminees(examId: number) {
@@ -89,7 +87,4 @@ export class ExamService {
     return this.httpClient.get<ScoreStat[]>('api/exam/scoreStats', {examId});
   }
 
-  getExprHostVncProxy(examId: string, exprId: string, hostId: string | number) {
-    return this.httpClient.get<[]>('api/exam/getExprHostVncProxy', {examId, exprId, hostId});
-  }
 }

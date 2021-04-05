@@ -3,7 +3,7 @@ import {Expr} from '@service/expr';
 import {Exam} from '@service/exam';
 import {switchMap} from 'rxjs/operators';
 import {ModalHelper} from '@delon/theme';
-import {EditExprComponent} from './update-exprs/edit-expr.component';
+import {EditExprComponent} from './update-expr/edit-expr.component';
 import {ExamService} from '@service/exam.service';
 import {NzNotificationService} from "ng-zorro-antd/notification";
 import {NzMessageService} from "ng-zorro-antd/message";
