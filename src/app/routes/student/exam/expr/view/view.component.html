@@ -32,22 +32,25 @@
 <div class="content">
   <div class="toolbar">
     当前主机：
-    <button *ngFor="let host of expr?.hostIds"
-            (click)="connectHostVnc(host)"
-            [nzType]="currentHost == host ? 'primary' : 'dashed'"
+    <button *ngFor="let host of examUserHosts"
+            (click)="connectHostVnc(host.hostId)"
+            [nzType]="currentHostId == host.hostId ? 'primary' : 'dashed'"
             nz-button nzSize="small">
-      Host{{host}}
+      Host{{host.hostId}}: {{host.cidr}}
     </button>
     <nz-divider nzType="vertical"></nz-divider>
-    <button nz-button nzSize="small" nzType="primary" (click)="startHost()" [nzLoading]="hostStarting" [disabled]="!!rfb">
-      启动
-    </button>
-    <nz-divider nzType="vertical"></nz-divider>
-    <button nz-button nzSize="small" nzDanger (click)="stopHost()" [nzLoading]="hostStopping" [disabled]="!rfb">
-      强制关机
-    </button>
-    <nz-divider nzType="vertical"></nz-divider>
-    <button nz-button nzSize="small" nzDanger>重置</button>
+    网关: {{examUserHosts[0]?.gw}}
+    <div style="float: right">
+      <button nz-button nzSize="small" nzType="primary" (click)="startHost()" [nzLoading]="hostStarting" [disabled]="!!rfb">
+        启动
+      </button>
+      <nz-divider nzType="vertical"></nz-divider>
+      <button nz-button nzSize="small" nzDanger (click)="stopHost()" [nzLoading]="hostStopping" [disabled]="!rfb">
+        强制关机
+      </button>
+      <nz-divider nzType="vertical"></nz-divider>
+      <button nz-button nzSize="small" nzDanger>重置</button>
+    </div>
   </div>
   <div #vnc class="vnc-container">
     <nz-empty *ngIf="!rfb" nzNotFoundContent="暂未开机"></nz-empty>

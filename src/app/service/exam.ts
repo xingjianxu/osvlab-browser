@@ -1,7 +1,6 @@
 import { parseISO } from 'date-fns';
 import { isBefore } from 'date-fns';
 import { Expr } from './expr';
-import { User } from './user';
 import {ExamUserLink} from "@service/exam-user-link";
 
 export class Exam {
@@ -11,15 +10,9 @@ export class Exam {
   startedAt: Date;
   endedAt: Date;
   createdAt: Date;
-  examExprs: [];
+  examExprs: {expr: Expr}[];
   examUserLinks: ExamUserLink[];
   fullScore: number;
-
-  get exprs() {
-    return this.examExprs.map((e) => {
-      return Expr.fromJSON(e['expr']);
-    });
-  }
 
   get started() {
     return isBefore(this.startedAt, new Date());
@@ -38,8 +31,8 @@ export class Exam {
   }
 
   get hostsCount() {
-    return this.exprs.reduce((acc, cur) => {
-      return acc + cur.hostCount;
+    return this.examExprs.reduce((acc, cur) => {
+      return acc + cur['expr']['hostCount'];
     }, 0);
   }
 

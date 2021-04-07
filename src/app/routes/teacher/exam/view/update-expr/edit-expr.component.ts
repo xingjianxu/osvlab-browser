@@ -31,8 +31,8 @@ export class EditExprComponent implements OnInit {
             } else {
               return this.exprService.list().pipe(map((exprs) => {
                 return exprs.filter((expr) => {
-                  return !this.exam.exprs.find((e) => {
-                    return e.id == expr.id;
+                  return !this.exam.examExprs.find((e) => {
+                    return e.expr.id == expr.id;
                   });
                 }).map((expr) => {
                   return {label: expr.title, value: expr.id};

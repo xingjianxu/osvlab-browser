@@ -18,6 +18,7 @@ import {PveService} from "@service/pve.service";
 import {NzMessageService} from "ng-zorro-antd/message";
 import {RC} from "@service/RC";
 import {TitleService} from "@delon/theme";
+import {ExamUserHost} from "@service/exam-user-host";
 
 @Component({
   selector: 'app-student-expr-view',
@@ -38,10 +39,12 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   @ViewChild('vnc') vncElm: ElementRef;
 
-  currentHost = 1;
+  currentHostId = 1;
   rfb: RFB;
   hostStarting = false;
   hostStopping = false;
+
+  examUserHosts: ExamUserHost[] = [];
 
   constructor(
     private userStateService: ScoreService,
@@ -73,8 +76,11 @@ export class ViewComponent implements OnInit, OnDestroy {
       })),
       this.activatedRoute.queryParamMap.pipe(switchMap((params) => {
         return this.examService.findById(params.get('examId'));
-      }))
-    ]).subscribe(([expr, stepScores, exam]) => {
+      })),
+      this.activatedRoute.queryParamMap.pipe(switchMap((params) => {
+        return this.pveService.getExamUserHostsOfExpr(params.get('examId'), params.get('exprId'));
+      })),
+    ]).subscribe(([expr, stepScores, exam, examUserHostsR]) => {
       stepScores.forEach((stepScore) => {
         this.updateStepScore(expr.steps, stepScore);
       });
@@ -82,7 +88,12 @@ export class ViewComponent implements OnInit, OnDestroy {
       this.exam = exam;
       this.titleService.setTitle(`实验: ${expr.title}`)
       this.setRemainTimer();
-      this.connectHostVnc(this.currentHost);
+      if (!examUserHostsR.success) {
+        this.messageService.error('加载主机信息错误！')
+        return;
+      }
+      this.examUserHosts = examUserHostsR.data;
+      this.connectHostVnc(this.currentHostId);
     });
   }
 
@@ -149,14 +160,14 @@ export class ViewComponent implements OnInit, OnDestroy {
     }
   }
 
-  connectHostVnc(host: number) {
-    this.currentHost = host;
+  connectHostVnc(hostId: number) {
+    this.currentHostId = hostId;
     this.rfb?.disconnect();
-    this.pveService.getVmVncConnection(this.exam.id, this.expr.id, this.currentHost).subscribe((r) => {
-      if (r.code == RC.VM_STOPPED) {
+    this.pveService.getHostVncConnection(this.exam.id, this.expr.id, this.currentHostId).subscribe((vncConnR) => {
+      if (vncConnR.code == RC.VM_STOPPED) {
         return;
       }
-      const conn = r.data;
+      const conn = vncConnR.data;
       this.rfb = new RFB(
         this.vncElm.nativeElement,
         ViewComponent.getVncWsUrl(conn.ticket),
@@ -183,15 +194,15 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   startHost() {
     this.hostStarting = true;
-    this.pveService.startVm(this.exam.id, this.expr.id, this.currentHost).subscribe(() => {
+    this.pveService.startHost(this.exam.id, this.expr.id, this.currentHostId).subscribe(() => {
       this.hostStarting = false;
-      this.connectHostVnc(this.currentHost);
+      this.connectHostVnc(this.currentHostId);
     });
   }
 
   stopHost() {
     this.hostStopping = true;
-    this.pveService.stopVm(this.exam.id, this.expr.id, this.currentHost).subscribe(() => {
+    this.pveService.stopHost(this.exam.id, this.expr.id, this.currentHostId).subscribe(() => {
       this.messageService.success('成功发出停机指令！');
     });
   }

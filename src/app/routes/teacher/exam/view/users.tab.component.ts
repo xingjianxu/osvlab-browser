@@ -6,6 +6,11 @@ import {Exam} from '@service/exam';
 import {ExamService} from '@service/exam.service';
 import {AddUsersComponent} from './add-users/add-users.component';
 import {ExamUserLink} from "@service/exam-user-link";
+import {PveService} from "@service/pve.service";
+import {Expr} from "@service/expr";
+import {combineLatest} from "rxjs";
+import {ExamUserHost} from "@service/exam-user-host";
+import {NzModalService} from "ng-zorro-antd/modal";
 
 @Component({
   selector: 'app-teacher-exam-view-users-tab',
@@ -16,6 +21,8 @@ export class ExamViewUsersTabComponent implements OnInit {
   loading = true;
 
   _exam: Exam;
+  exprs: Expr[];
+  userHostsMapping: {string: ExamUserHost};
 
   @Input()
   set exam(exam: Exam) {
@@ -25,14 +32,26 @@ export class ExamViewUsersTabComponent implements OnInit {
       }
       this.loading = true;
       this._exam = exam;
-      this.examService.getExamUserLinks(exam.id).subscribe((res) => {
-        this.examUserLinks = res;
+      this.exprs = this._exam.examExprs.map((e) => {
+        return Expr.fromJSON(e.expr);
+      });
+      combineLatest([
+        this.examService.getExamUserLinks(exam.id),
+        this.pveService.getAllExamUserHosts(exam.id),
+      ]).subscribe(([examUserLinks, userHostsR]) => {
+        this.examUserLinks = examUserLinks;
+        this.userHostsMapping = userHostsR.data;
         this.loading = false;
       });
     }
   }
 
-  constructor(private examService: ExamService, private modalHelper: ModalHelper, private msgService: NzMessageService) {
+  constructor(
+    private examService: ExamService,
+    private modalHelper: ModalHelper,
+    private pveService: PveService,
+    private modal: NzModalService,
+    private msgService: NzMessageService) {
   }
 
   ngOnInit(): void {
@@ -62,6 +81,22 @@ export class ExamViewUsersTabComponent implements OnInit {
     ).subscribe((res) => {
       this.examUserLinks = res;
       this.loading = false;
+    });
+  }
+
+  initUserHost(userId: number, exprId: number, hostId: number) {
+    this.pveService.initUserHost(userId, this._exam.id, exprId, hostId).subscribe();
+  }
+
+  showNetworkInfo(examUserHost: ExamUserHost) {
+    this.modal.success({
+      nzTitle: `网络信息：VMID[${examUserHost.vmId}]`,
+      nzContent: `<dl>
+<dt>CIDR</dt>
+<dd>${examUserHost.cidr}</dd>
+<dt>网关</dt>
+<dd>${examUserHost.gw}</dd>
+</dl>`
     });
   }
 }

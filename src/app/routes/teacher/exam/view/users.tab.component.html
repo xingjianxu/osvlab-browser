@@ -1,9 +1,14 @@
 <nz-card>
   <div style="margin-bottom: 1em;">
-    <button nz-button nzType="primary" (click)="addUsers()">添加学生</button>
-    <button nz-button [nzType]="'primary'" nz-popconfirm nzPopconfirmTitle="确定清空所有学生么?" (nzOnConfirm)="removeAllUsers()">
+    <button nz-button nzType="primary" (click)="addUsers()">添加学生组</button>
+    <button nz-button nzType="primary" nz-popconfirm nzPopconfirmTitle="确定清空所有学生么?" (nzOnConfirm)="removeAllUsers()">
       <span>清空学生</span>
     </button>
+    <nz-divider nzType="vertical"></nz-divider>
+    <button nz-button nzType="primary">分配虚拟机</button>
+    <button nz-button nzDanger>重置虚拟机</button>
+    <button nz-button nzDanger>清空虚拟机</button>
+
   </div>
   <nz-table #userLinksTable *ngIf="!loading"
             [nzLoading]="loading"
@@ -16,8 +21,8 @@
       <th nzWidth="60px">座位</th>
       <th nzWidth="150px">学号/用户名</th>
       <th nzWidth="150px">全名</th>
-      <ng-container *ngFor="let expr of _exam.exprs;let i = index">
-        <th *ngFor="let hostId of expr.hostIds" style="width: 110px">
+      <ng-container *ngFor="let expr1 of exprs;let i = index">
+        <th *ngFor="let hostId of expr1.hostIds" style="width: 150px">
           实验{{i + 1}}: Host{{hostId}}
         </th>
       </ng-container>
@@ -26,16 +31,16 @@
     </thead>
     <tbody>
     <tr *ngFor="let examUserLink of userLinksTable.data">
-      <td>{{examUserLink.seat}}</td>
+      <td>{{ examUserLink.seat }}</td>
       <td>{{ examUserLink.user.username }}</td>
       <td>{{ examUserLink.user.fullName }}</td>
-      <ng-container *ngFor="let expr of _exam.exprs">
-        <td *ngFor="let hostId of expr.hostIds">
-          <a target="_blank" href="https://virt.bixlab.cn/#v1:0:=qemu%2F8100111::::::8::">PVE</a>
-          <nz-divider nzType="vertical"></nz-divider>
-          <a>重置</a>
-        </td>
-      </ng-container>
+      <td *ngFor="let examUserHost of userHostsMapping[examUserLink.user.id];let i = index">
+        <a target="_blank" [href]="examUserHost.console">PVE</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a (click)="showNetworkInfo(examUserHost)">网络</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a (click)="initUserHost(examUserLink.user.id, examUserHost.exprId, i+1)">重置</a>
+      </td>
       <td>
         <a>禁止考试</a>
         <nz-divider nzType="vertical"></nz-divider>

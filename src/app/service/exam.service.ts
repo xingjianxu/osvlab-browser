@@ -8,6 +8,7 @@ import {User} from './user';
 import {ScoreStat} from '@service/score-stat';
 import {ExamUserLink} from '@service/exam-user-link';
 import {R} from "@service/r";
+import {ExamUserHost} from "@service/exam-user-host";
 
 @Injectable({
   providedIn: 'root',
