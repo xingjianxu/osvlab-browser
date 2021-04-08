@@ -7,7 +7,7 @@
     </button>
     <button nz-button nzType="primary" (nzOnConfirm)="shuffleSeats()" nz-popconfirm nzPopconfirmTitle="确定重排座位么?主机不会同考生一起移动座位！">重排座位</button>
     <nz-divider nzType="vertical"></nz-divider>
-    <button nz-button nzType="primary">分配主机</button>
+    <button nz-button nzType="primary" (click)="initAllUserHosts()">分配主机</button>
     <button nz-button nzDanger nz-popconfirm nzPopconfirmTitle="确定重置所有考生主机么?">重置主机</button>
     <button nz-button nzDanger (nzOnConfirm)="deleteAllExamHosts()" nz-popconfirm nzPopconfirmTitle="确定清空所有考生主机么?">清空主机</button>
 
@@ -32,11 +32,11 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let examUserLink of userLinksTable.data">
-      <td>{{ examUserLink.seat }}</td>
-      <td>{{ examUserLink.user.username }}</td>
-      <td>{{ examUserLink.user.fullName }}</td>
-      <td *ngFor="let examUserHost of userHostsMapping[examUserLink.user.id];let i = index">
+    <tr *ngFor="let link of userLinksTable.data">
+      <td>{{ link.seat }}</td>
+      <td>{{ link.user.username }}</td>
+      <td>{{ link.user.fullName }}</td>
+      <td *ngFor="let examUserHost of userHostsMapping[link.user.id]">
         <i *ngIf="examUserHost.status == 'running'" nz-tooltip nzTooltipTitle="运行中" nz-icon nzType="play-circle" nzTheme="twotone" nzTwotoneColor="#52c41a"></i>
         <i *ngIf="examUserHost.status == 'stopped'" nz-tooltip nzTooltipTitle="已停止" nz-icon nzType="stop" nzTheme="twotone" nzTwotoneColor="#eb2f96"></i>
         <i *ngIf="!examUserHost.status" nz-tooltip nzTooltipTitle="未初始化" nz-icon nzType="question" nzTheme="outline"></i>
@@ -46,16 +46,16 @@
         <nz-divider nzType="vertical"></nz-divider>
         <a (click)="showNetworkInfo(examUserHost)">网络</a>
         <nz-divider nzType="vertical"></nz-divider>
-        <a (click)="initUserHost(examUserLink.user.id, examUserHost.exprId, i+1)">重置</a>
+        <a (click)="initUserHost(link.user.id, examUserHost.exprId, examUserHost.hostId)">重置</a>
       </td>
       <td>
-        <a (click)="removeUsers([examUserLink.user.id])">编辑</a>
+        <a (click)="removeUsers([link.user.id])">编辑</a>
         <nz-divider nzType="vertical"></nz-divider>
-        <a>重置主机</a>
+        <a nz-popconfirm nzPopconfirmTitle="确定新建/重置该考生的所有主机么?" (nzOnConfirm)="initUserHosts(link.user.id)">重置主机</a>
         <nz-divider nzType="vertical"></nz-divider>
         <a (click)="lockUserInExam()">禁止考试</a>
         <nz-divider nzType="vertical"></nz-divider>
-        <a (click)="removeUsers([examUserLink.user.id])">移除</a>
+        <a (click)="removeUsers([link.user.id])">移除</a>
       </td>
     </tr>
     </tbody>

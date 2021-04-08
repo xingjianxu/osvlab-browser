@@ -99,15 +99,16 @@ export class ExamViewUsersTabComponent implements OnInit {
     this.modal.success({
       nzTitle: `网络信息：VMID[${examUserHost.vmId}]`,
       nzContent: `<dl>
-<dt>CIDR</dt>
-<dd>${examUserHost.cidr}</dd>
-<dt>网关</dt>
-<dd>${examUserHost.gw}</dd>
-</dl>`
+                  <dt>CIDR</dt>
+                  <dd>${examUserHost.cidr}</dd>
+                  <dt>网关</dt>
+                  <dd>${examUserHost.gw}</dd>
+                  </dl>`
     });
   }
 
   removeUsers(userIds: number[]) {
+    this.loading = true;
     this.examService.removeUsers(this._exam.id, userIds).subscribe((r) => {
       if (r.success) {
         this.msgService.success('成功移除该学生！');
@@ -131,6 +132,22 @@ export class ExamViewUsersTabComponent implements OnInit {
     this.loading = true;
     this.examService.shuffleSeats(this._exam.id).subscribe(() => {
       this.msgService.success('成功重排座位！');
+      this.refreshUsers();
+    });
+  }
+
+  initAllUserHosts() {
+    this.loading = true;
+    this.examService.initAllUserHosts(this._exam.id).subscribe(() => {
+      this.msgService.success('完成所有考生主机的分配！');
+      this.refreshUsers();
+    });
+  }
+
+  initUserHosts(userId: number) {
+    this.loading = true;
+    this.examService.initUserHosts(this._exam.id, userId).subscribe(() => {
+      this.msgService.success('完成该考生主机的分配！');
       this.refreshUsers();
     });
   }

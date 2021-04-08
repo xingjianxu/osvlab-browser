@@ -115,4 +115,20 @@ export class ExamService {
       })
     );
   }
+
+  initAllUserHosts(examId: number) {
+    return this.httpClient.post('api/pve/initAllUserHosts', {examId}).pipe(
+      map((resp) => {
+        return new R(resp);
+      })
+    );
+  }
+
+  initUserHosts(examId: number, userId: number) {
+    return this.httpClient.post('api/pve/initUserHosts', {examId, userId}).pipe(
+      map((resp) => {
+        return new R(resp);
+      })
+    );
+  }
 }
