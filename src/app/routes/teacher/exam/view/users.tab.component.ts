@@ -4,13 +4,14 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 import {switchMap} from 'rxjs/operators';
 import {Exam} from '@service/exam';
 import {ExamService} from '@service/exam.service';
-import {AddUsersComponent} from './add-users/add-users.component';
+import {AddUserGroupsComponent} from './add-user-group/add-user-groups.component';
 import {ExamUserLink} from "@service/exam-user-link";
 import {PveService} from "@service/pve.service";
 import {Expr} from "@service/expr";
 import {combineLatest} from "rxjs";
 import {ExamUserHost} from "@service/exam-user-host";
 import {NzModalService} from "ng-zorro-antd/modal";
+import {AddUsersComponent} from "./add-users/add-users.component";
 
 @Component({
   selector: 'app-teacher-exam-view-users-tab',
@@ -22,7 +23,7 @@ export class ExamViewUsersTabComponent implements OnInit {
 
   _exam: Exam;
   exprs: Expr[];
-  userHostsMapping: {string: ExamUserHost};
+  userHostsMapping: { string: ExamUserHost };
 
   @Input()
   set exam(exam: Exam) {
@@ -35,14 +36,7 @@ export class ExamViewUsersTabComponent implements OnInit {
       this.exprs = this._exam.examExprs.map((e) => {
         return Expr.fromJSON(e.expr);
       });
-      combineLatest([
-        this.examService.getExamUserLinks(exam.id),
-        this.pveService.getAllExamUserHosts(exam.id),
-      ]).subscribe(([examUserLinks, userHostsR]) => {
-        this.examUserLinks = examUserLinks;
-        this.userHostsMapping = userHostsR.data;
-        this.loading = false;
-      });
+      this.refreshUsers();
     }
   }
 
@@ -57,30 +51,39 @@ export class ExamViewUsersTabComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  refreshUsers() {
+    combineLatest([
+      this.examService.getExamUserLinks(this._exam.id),
+      this.pveService.getAllExamUserHosts(this._exam.id),
+    ]).subscribe(([examUserLinks, userHostsR]) => {
+      this.examUserLinks = examUserLinks;
+      this.userHostsMapping = userHostsR.data;
+      this.loading = false;
+    });
+  }
+
+  addUserGroups() {
+    this.modalHelper.create(AddUserGroupsComponent, {exam: this._exam}, {size: 'md'}).subscribe(() => {
+      this.refreshUsers();
+    });
+  }
+
   addUsers() {
-    this.modalHelper.create(AddUsersComponent, {exam: this._exam}, {size: 'md'}).pipe(
-      switchMap((_) => {
-        return this.examService.getExamUserLinks(this._exam.id);
-      }),
-    ).subscribe((res) => {
-      this.examUserLinks = res;
+    this.modalHelper.create(AddUsersComponent, {exam: this._exam}, {size: 'md'}).subscribe(() => {
+      this.refreshUsers();
     });
   }
 
   removeAllUsers() {
     this.loading = true;
-    this.examService.removeAllUsers(this._exam.id).pipe(
-      switchMap((r) => {
-        if (r.success) {
-          this.msgService.success('成功删除所有考试学生!');
-          return this.examService.getExamUserLinks(this._exam.id);
-        } else {
-          this.msgService.success('发生未知错误！');
-        }
-      }),
-    ).subscribe((res) => {
-      this.examUserLinks = res;
-      this.loading = false;
+    this.examService.removeAllUsers(this._exam.id).subscribe((r) => {
+      if (r.success) {
+        this.msgService.success('成功删除所有考试学生!');
+        return this.examService.getExamUserLinks(this._exam.id);
+      } else {
+        this.msgService.success('发生未知错误！');
+      }
+      this.refreshUsers();
     });
   }
 
@@ -97,6 +100,15 @@ export class ExamViewUsersTabComponent implements OnInit {
 <dt>网关</dt>
 <dd>${examUserHost.gw}</dd>
 </dl>`
+    });
+  }
+
+  removeUsers(userIds: number[]) {
+    this.examService.removeUsers(this._exam.id, userIds).subscribe((r) => {
+      if (r.success) {
+        this.msgService.success('成功移除该学生！');
+        this.refreshUsers();
+      }
     });
   }
 }

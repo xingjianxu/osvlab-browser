@@ -71,12 +71,24 @@ export class ExamService {
     return this.httpClient.get<ExamUserLink[]>('api/exam/getExamUserLinks', {examId});
   }
 
-  addUsers(examId: number, userGroupIds: number[] | string[]) {
-    return this.httpClient.post<number>('api/exam/addUsers', {examId, userGroupIds});
+  addUserGroups(examId: number, userGroupIds: number[] | string[]) {
+    return this.httpClient.post<number>('api/exam/addUserGroups', {examId, userGroupIds});
+  }
+
+  addUsers(examId: number, usernames: string[]) {
+    return this.httpClient.post<number>('api/exam/addUsers', {examId, usernames});
   }
 
   removeAllUsers(examId: number | string) {
     return this.httpClient.delete<R<void>>('api/exam/removeAllUsers', {examId}).pipe(
+      map((resp) => {
+        return new R(resp);
+      })
+    );
+  }
+
+  removeUsers(examId:number, userIds: number[]) {
+    return this.httpClient.delete<R<void>>('api/exam/removeUsers', {examId, userIds}).pipe(
       map((resp) => {
         return new R(resp);
       })

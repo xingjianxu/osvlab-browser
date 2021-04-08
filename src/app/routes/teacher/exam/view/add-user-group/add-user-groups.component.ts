@@ -8,24 +8,31 @@ import {ExamService} from '@service/exam.service';
 import {UserGroupService} from '@service/user-group.service';
 
 @Component({
-  selector: 'app-teacher-exam-add-users',
-  templateUrl: './add-users.component.html',
+  selector: 'app-teacher-exam-add-user-groupss',
+  templateUrl: './add-user-groups.component.html',
 })
-export class AddUsersComponent implements OnInit {
+export class AddUserGroupsComponent implements OnInit {
   exam: Exam;
 
   saveLoading = false;
 
   schema: SFSchema = {
     properties: {
-      students: {
-        type: 'string',
-        title: '学生列表',
+      userGroupIds: {
+        type: 'number',
+        title: '学生组',
         ui: {
-          widget: 'textarea',
-          placeholder: '学号1\n学号2\n... ...',
-          autosize: {minRows: 10},
-        },
+          widget: 'select',
+          mode: 'multiple',
+          asyncData: () =>
+            this.userGroupService.list().pipe(
+              map((groups) => {
+                return groups.map((group) => {
+                  return {label: `${group.name} (${group.usersCount})`, value: group.id};
+                });
+              }),
+            ),
+        } as SFSelectWidgetSchema,
       },
     },
     required: ['userGroupIds'],
@@ -48,8 +55,8 @@ export class AddUsersComponent implements OnInit {
 
   save(values: any) {
     this.saveLoading = true;
-    const usernames = values.students.split('\n').map((s) => s.trim());
-    this.examService.addUsers(this.exam.id, usernames).subscribe((res) => {
+    const userGroupIds = values.userGroupIds;
+    this.examService.addUserGroups(this.exam.id, userGroupIds).subscribe((res) => {
       this.msgSrv.success('成功添加学生：' + res.toString());
       this.saveLoading = false;
       this.close(res);
