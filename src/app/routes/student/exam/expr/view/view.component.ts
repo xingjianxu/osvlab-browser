@@ -194,16 +194,33 @@ export class ViewComponent implements OnInit, OnDestroy {
 
   startHost() {
     this.hostStarting = true;
-    this.pveService.startHost(this.exam.id, this.expr.id, this.currentHostId).subscribe(() => {
+    this.pveService.startHost(this.exam.id, this.expr.id, this.currentHostId).subscribe((r) => {
+      switch (r.code) {
+        case RC.SUCCESS:
+          this.connectHostVnc(this.currentHostId);
+          this.messageService.success('主机启动成功！')
+          break;
+        case RC.VM_NOTEXIST:
+          this.messageService.error('主机不存在，请先重置虚拟机！')
+          break;
+      }
       this.hostStarting = false;
-      this.connectHostVnc(this.currentHostId);
     });
   }
 
   stopHost() {
     this.hostStopping = true;
     this.pveService.stopHost(this.exam.id, this.expr.id, this.currentHostId).subscribe(() => {
-      this.messageService.success('成功发出停机指令！');
+      this.messageService.success('主机停机成功！');
+    });
+  }
+
+  initHost() {
+    this.pveService.initHost(this.exam.id, this.expr.id, this.currentHostId).subscribe((r) => {
+      if (r.success) {
+        this.messageService.success('主机重置成功！');
+        this.startHost();
+      }
     });
   }
 }

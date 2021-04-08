@@ -12,7 +12,7 @@
     </nz-breadcrumb>
   </ng-template>
   <ng-template #action>
-    <a nz-button [routerLink]="['..', 'step', 'edit']" [queryParams]="{ exprId: expr.id }" [nzType]="'primary'">
+    <a nz-button [routerLink]="['..', 'step', 'edit']" [queryParams]="{ exprId: expr.id }" nzType="primary">
       <i nz-icon nzType="plus"></i>
       <span>新建步骤</span>
     </a>
@@ -24,10 +24,15 @@
            nzTitle="#{{ i + 1 }} {{ step.title }}" [nzExtra]="extraTemplate">
     <p>{{ step.description }}</p>
     <ng-template #extraTemplate>
+      <nz-tag nzColor="success">{{step.fullScore}}分</nz-tag>
+      <nz-divider nzType="vertical"></nz-divider>
+
       <nz-tag nzColor="success">Host{{step.hostId}}</nz-tag>
       <nz-divider nzType="vertical"></nz-divider>
+
       <a [routerLink]="['..', 'step', 'edit']" [queryParams]="{ stepId: step.id }">编辑</a>
       <nz-divider nzType="vertical"></nz-divider>
+
       <i nz-icon nzType="drag" nzTheme="outline" cdkDragHandle></i>
     </ng-template>
   </nz-card>

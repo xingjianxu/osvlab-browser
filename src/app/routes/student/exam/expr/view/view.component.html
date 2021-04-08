@@ -45,11 +45,18 @@
         启动
       </button>
       <nz-divider nzType="vertical"></nz-divider>
-      <button nz-button nzSize="small" nzDanger (click)="stopHost()" [nzLoading]="hostStopping" [disabled]="!rfb">
+      <button nz-button nzSize="small" nzDanger (click)="stopHost()" [nzLoading]="hostStopping" [disabled]="!rfb"
+              nz-popconfirm nzPopconfirmPlacement="bottom" nzOkType="danger"
+              nzPopconfirmTitle="确认强制关机？一般情况下请使用操作系统命令进行关机与重启！">
         强制关机
       </button>
       <nz-divider nzType="vertical"></nz-divider>
-      <button nz-button nzSize="small" nzDanger>重置</button>
+      <button nz-button nzSize="small" nzDanger
+              nz-popconfirm nzPopconfirmPlacement="bottom" nzOkType="danger"
+              nzPopconfirmTitle="确认重置当前主机? 重置后内部用户数据将丢失，主机将恢复初始状态！"
+              (nzOnConfirm)="initHost()">
+        重置
+      </button>
     </div>
   </div>
   <div #vnc class="vnc-container">

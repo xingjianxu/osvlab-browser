@@ -18,7 +18,9 @@ export class PveService {
   }
 
   startHost(examId: number, exprId: number, hostId: number) {
-    return this.httpClient.post('api/pve/startHost', {examId, exprId, hostId});
+    return this.httpClient.post('api/pve/startHost', {examId, exprId, hostId}).pipe(map((resp) => {
+      return new R(resp);
+    }));
   }
 
   stopHost(examId: number, exprId: number, hostId: number) {
@@ -30,11 +32,19 @@ export class PveService {
   }
 
   initHost(examId: number, exprId: number, hostId: number) {
-    return this.httpClient.post<string>('api/pve/initUserHost', {examId, exprId, hostId});
+    return this.httpClient.post('api/pve/initHost', {examId, exprId, hostId}).pipe(
+      map((resp) => {
+        return new R(resp);
+      })
+    );
   }
 
   initUserHost(userId: number, examId: number, exprId: number, hostId: number) {
-    return this.httpClient.post<string>('api/pve/initUserHost', {userId, examId, exprId, hostId});
+    return this.httpClient.post('api/pve/initUserHost', {userId, examId, exprId, hostId}).pipe(
+      map((resp) => {
+        return new R(resp);
+      })
+    );
   }
 
   getExamUserHost(examId: number | string, exprId: number | string, hostId: number | string) {
