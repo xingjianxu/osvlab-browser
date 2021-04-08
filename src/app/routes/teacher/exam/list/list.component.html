@@ -7,13 +7,14 @@
   </ng-template>
 </page-header>
 
-<nz-table #examsTable [nzData]="exams" [nzBordered]="true">
+<nz-table #examsTable [nzData]="exams" [nzBordered]="true" [nzLoading]="loading">
   <thead>
     <tr>
-      <th>名称</th>
-      <th>描述</th>
-      <th>开始时间</th>
-      <th>结束时间</th>
+      <th nzWidth="400px">名称</th>
+      <th nzWidth="400px" nzEllipsis>描述</th>
+      <th nzWidth="100px">状态</th>
+      <th nzWidth="200px">开始时间</th>
+      <th nzWidth="200px">结束时间</th>
       <th>操作</th>
     </tr>
   </thead>
@@ -23,10 +24,13 @@
         <a [routerLink]="['..', 'view']" [queryParams]="{ examId: exam.id, tab: 'users' }">{{ exam.title }}</a>
       </td>
       <td>{{ exam.description }}</td>
+      <td></td>
       <td>{{ exam['startedAt'] | dateFormat }}</td>
       <td>{{ exam['endedAt'] | dateFormat }}</td>
       <td>
         <a (click)="openEditor(exam)">编辑</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a (click)="cloneExam(exam.id)">克隆</a>
       </td>
     </tr>
   </tbody>

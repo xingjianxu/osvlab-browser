@@ -3,6 +3,7 @@ import {ModalHelper} from '@delon/theme';
 import {Exam} from '../../../../service/exam';
 import {ExamService} from '../../../../service/exam.service';
 import {EditComponent} from '../edit/edit.component';
+import {NzMessageService} from "ng-zorro-antd/message";
 
 @Component({
   selector: 'app-teacher-exam-list',
@@ -15,6 +16,7 @@ export class ListComponent implements OnInit {
 
   constructor(
     private examService: ExamService,
+    private messageService: NzMessageService,
     private modalHelper: ModalHelper,
     private cdr: ChangeDetectorRef,
   ) {
@@ -22,8 +24,14 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = true;
+    this.refreshExams();
+  }
+
+  refreshExams() {
     this.examService.list().subscribe((data) => {
       this.exams = data;
+      this.loading = false;
     });
   }
 
@@ -44,4 +52,11 @@ export class ListComponent implements OnInit {
     });
   }
 
+  cloneExam(examId) {
+    this.loading = true;
+    this.examService.cloneExam(examId).subscribe(() => {
+      this.messageService.success('克隆完成！')
+      this.refreshExams();
+    })
+  }
 }

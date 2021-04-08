@@ -107,4 +107,12 @@ export class ExamService {
     );
 
   }
+
+  cloneExam(examId: number) {
+    return this.httpClient.post('api/exam/cloneExam', {examId}).pipe(
+      map((resp) => {
+        return new R(resp);
+      })
+    );
+  }
 }
