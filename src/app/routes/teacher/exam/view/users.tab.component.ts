@@ -52,6 +52,7 @@ export class ExamViewUsersTabComponent implements OnInit {
   }
 
   refreshUsers() {
+    this.loading = true;
     combineLatest([
       this.examService.getExamUserLinks(this._exam.id),
       this.pveService.getAllExamUserHosts(this._exam.id),
@@ -88,7 +89,10 @@ export class ExamViewUsersTabComponent implements OnInit {
   }
 
   initUserHost(userId: number, exprId: number, hostId: number) {
-    this.pveService.initUserHost(userId, this._exam.id, exprId, hostId).subscribe();
+    this.loading = true;
+    this.pveService.initUserHost(userId, this._exam.id, exprId, hostId).subscribe(() => {
+      this.refreshUsers();
+    });
   }
 
   showNetworkInfo(examUserHost: ExamUserHost) {
@@ -109,6 +113,25 @@ export class ExamViewUsersTabComponent implements OnInit {
         this.msgService.success('成功移除该学生！');
         this.refreshUsers();
       }
+    });
+  }
+
+  lockUserInExam() {
+  }
+
+  deleteAllExamHosts() {
+    this.loading = true;
+    this.pveService.deleteAllExamHosts(this._exam.id).subscribe(() => {
+      this.msgService.success('成功移除所有主机资源！');
+      this.refreshUsers();
+    });
+  }
+
+  shuffleSeats() {
+    this.loading = true;
+    this.examService.shuffleSeats(this._exam.id).subscribe(() => {
+      this.msgService.success('成功重排座位！');
+      this.refreshUsers();
     });
   }
 }

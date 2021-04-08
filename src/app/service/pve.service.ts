@@ -70,4 +70,12 @@ export class PveService {
       })
     );
   }
+
+  deleteAllExamHosts(examId: number) {
+    return this.httpClient.delete<{}>('api/pve/deleteAllExamHosts', {examId}).pipe(
+      map((resp) => {
+        return new R(resp);
+      })
+    );
+  }
 }

@@ -5,4 +5,5 @@ export class ExamUserHost {
   console: string;
   cidr: string;
   gw: string;
+  status: string;
 }

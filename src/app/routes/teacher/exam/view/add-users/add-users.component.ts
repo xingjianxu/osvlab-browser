@@ -48,7 +48,7 @@ export class AddUsersComponent implements OnInit {
 
   save(values: any) {
     this.saveLoading = true;
-    const usernames = values.students.split('\n').map((s) => s.trim());
+    const usernames = values.students.split('\n').map((s) => s.trim()).filter((e) => e && e.length > 0);
     this.examService.addUsers(this.exam.id, usernames).subscribe((res) => {
       this.msgSrv.success('成功添加学生：' + res.toString());
       this.saveLoading = false;

@@ -87,7 +87,7 @@ export class ExamService {
     );
   }
 
-  removeUsers(examId:number, userIds: number[]) {
+  removeUsers(examId: number, userIds: number[]) {
     return this.httpClient.delete<R<void>>('api/exam/removeUsers', {examId, userIds}).pipe(
       map((resp) => {
         return new R(resp);
@@ -99,4 +99,12 @@ export class ExamService {
     return this.httpClient.get<ScoreStat[]>('api/exam/scoreStats', {examId});
   }
 
+  shuffleSeats(examId: number) {
+    return this.httpClient.put('api/exam/shuffleSeats', {examId}).pipe(
+      map((resp) => {
+        return new R(resp);
+      })
+    );
+
+  }
 }

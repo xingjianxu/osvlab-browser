@@ -11,7 +11,10 @@ import {
   LockOutline,
   LogoutOutline,
   PlayCircleOutline,
+  PlayCircleTwoTone,
+  QuestionOutline,
   SettingOutline,
+  StopTwoTone,
   ToolOutline,
   UserOutline
 } from '@ant-design/icons-angular/icons';
@@ -25,7 +28,10 @@ export const ICONS_AUTO = [
   LockOutline,
   LogoutOutline,
   PlayCircleOutline,
+  PlayCircleTwoTone,
+  QuestionOutline,
   SettingOutline,
+  StopTwoTone,
   ToolOutline,
   UserOutline
 ];
