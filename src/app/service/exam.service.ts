@@ -116,8 +116,8 @@ export class ExamService {
     );
   }
 
-  initAllUserHosts(examId: number) {
-    return this.httpClient.post('api/pve/initAllUserHosts', {examId}).pipe(
+  initAllExamHosts(examId: number) {
+    return this.httpClient.post('api/pve/initAllExamHosts', {examId}).pipe(
       map((resp) => {
         return new R(resp);
       })

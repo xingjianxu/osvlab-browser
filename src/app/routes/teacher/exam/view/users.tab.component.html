@@ -7,9 +7,9 @@
     </button>
     <button nz-button nzType="primary" (nzOnConfirm)="shuffleSeats()" nz-popconfirm nzPopconfirmTitle="确定重排座位么?主机不会同考生一起移动座位！">重排座位</button>
     <nz-divider nzType="vertical"></nz-divider>
-    <button nz-button nzType="primary" (click)="initAllUserHosts()">分配主机</button>
+    <button nz-button nzType="primary" (click)="initAllExamHosts()">分配主机</button>
     <button nz-button nzDanger nz-popconfirm nzPopconfirmTitle="确定重置所有考生主机么?">重置主机</button>
-    <button nz-button nzDanger (nzOnConfirm)="deleteAllExamHosts()" nz-popconfirm nzPopconfirmTitle="确定清空所有考生主机么?">清空主机</button>
+    <button nz-button nzDanger (nzOnConfirm)="deleteExamAllHosts()" nz-popconfirm nzPopconfirmTitle="确定清空所有考生主机么?">清空主机</button>
 
   </div>
   <nz-table #userLinksTable

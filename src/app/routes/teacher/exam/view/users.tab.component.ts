@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ModalHelper} from '@delon/theme';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {switchMap} from 'rxjs/operators';
@@ -8,22 +8,29 @@ import {AddUserGroupsComponent} from './add-user-group/add-user-groups.component
 import {ExamUserLink} from "@service/exam-user-link";
 import {PveService} from "@service/pve.service";
 import {Expr} from "@service/expr";
-import {combineLatest} from "rxjs";
+import {combineLatest, Subscription} from "rxjs";
 import {ExamUserHost} from "@service/exam-user-host";
 import {NzModalService} from "ng-zorro-antd/modal";
 import {AddUsersComponent} from "./add-users/add-users.component";
+import {StompRService} from "@stomp/ng2-stompjs";
 
 @Component({
   selector: 'app-teacher-exam-view-users-tab',
   templateUrl: './users.tab.component.html',
 })
-export class ExamViewUsersTabComponent implements OnInit {
+export class ExamViewUsersTabComponent implements OnInit, OnDestroy {
   examUserLinks: ExamUserLink[];
   loading = true;
 
   _exam: Exam;
   exprs: Expr[];
   userHostsMapping: { string: ExamUserHost };
+
+  initAllExamHosts$: Subscription;
+  deleteExamAllHosts$: Subscription;
+  initUserHosts$: Subscription;
+  initUserHost$: Subscription;
+  removeUsers$: Subscription;
 
   @Input()
   set exam(exam: Exam) {
@@ -44,11 +51,48 @@ export class ExamViewUsersTabComponent implements OnInit {
     private examService: ExamService,
     private modalHelper: ModalHelper,
     private pveService: PveService,
+    private stompRService: StompRService,
     private modal: NzModalService,
     private msgService: NzMessageService) {
   }
 
   ngOnInit(): void {
+    this.initSubscriptions();
+  }
+
+  ngOnDestroy(): void {
+    this.destroySubscription();
+  }
+
+  initSubscriptions() {
+    this.initAllExamHosts$ = this.stompRService.watch('/topic/admin/pve/initAllExamHosts').subscribe((r) => {
+      this.msgService.success('成功分配所有考生主机！');
+      this.refreshUsers();
+    });
+    this.deleteExamAllHosts$ = this.stompRService.watch('/topic/admin/pve/deleteExamAllHosts').subscribe((r) => {
+      this.msgService.success('成功删除所有考生主机！');
+      this.refreshUsers();
+    });
+    this.initUserHosts$ = this.stompRService.watch('/topic/admin/pve/initUserHosts').subscribe((r) => {
+      this.msgService.success('成功分配考生的所有主机！');
+      this.refreshUsers();
+    });
+    this.initUserHost$ = this.stompRService.watch('/topic/admin/pve/initUserHost').subscribe((r) => {
+      this.msgService.success('成功为考生分配该主机！');
+      this.refreshUsers();
+    });
+    this.removeUsers$ = this.stompRService.watch('/topic/admin/exam/removeUsers').subscribe((r) => {
+      this.msgService.success('成功移除考生！');
+      this.refreshUsers();
+    });
+  }
+
+  destroySubscription() {
+    this.initAllExamHosts$.unsubscribe();
+    this.deleteExamAllHosts$.unsubscribe();
+    this.initUserHosts$.unsubscribe();
+    this.initUserHost$.unsubscribe();
+    this.removeUsers$.unsubscribe();
   }
 
   refreshUsers() {
@@ -90,8 +134,8 @@ export class ExamViewUsersTabComponent implements OnInit {
 
   initUserHost(userId: number, exprId: number, hostId: number) {
     this.loading = true;
-    this.pveService.initUserHost(userId, this._exam.id, exprId, hostId).subscribe(() => {
-      this.refreshUsers();
+    this.pveService.initUserHost(userId, this._exam.id, exprId, hostId).subscribe((r) => {
+      this.msgService.success('正在分配考生主机');
     });
   }
 
@@ -110,21 +154,17 @@ export class ExamViewUsersTabComponent implements OnInit {
   removeUsers(userIds: number[]) {
     this.loading = true;
     this.examService.removeUsers(this._exam.id, userIds).subscribe((r) => {
-      if (r.success) {
-        this.msgService.success('成功移除该学生！');
-        this.refreshUsers();
-      }
+      this.msgService.success('正在移除学生！');
     });
   }
 
   lockUserInExam() {
   }
 
-  deleteAllExamHosts() {
+  deleteExamAllHosts() {
     this.loading = true;
-    this.pveService.deleteAllExamHosts(this._exam.id).subscribe(() => {
-      this.msgService.success('成功移除所有主机资源！');
-      this.refreshUsers();
+    this.pveService.deleteExamAllHosts(this._exam.id).subscribe(() => {
+      this.msgService.success('正在移除所有主机资源！');
     });
   }
 
@@ -136,19 +176,17 @@ export class ExamViewUsersTabComponent implements OnInit {
     });
   }
 
-  initAllUserHosts() {
+  initAllExamHosts() {
     this.loading = true;
-    this.examService.initAllUserHosts(this._exam.id).subscribe(() => {
-      this.msgService.success('完成所有考生主机的分配！');
-      this.refreshUsers();
+    this.examService.initAllExamHosts(this._exam.id).subscribe(() => {
+      this.msgService.success('正在分配所有考生主机！');
     });
   }
 
   initUserHosts(userId: number) {
     this.loading = true;
     this.examService.initUserHosts(this._exam.id, userId).subscribe(() => {
-      this.msgService.success('完成该考生主机的分配！');
-      this.refreshUsers();
+      this.msgService.success('正在分配该考生的所有主机！');
     });
   }
 }
