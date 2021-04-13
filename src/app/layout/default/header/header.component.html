@@ -5,21 +5,13 @@
 </div>
 <div class="alain-default__nav-wrap">
   <ul class="alain-default__nav">
-    <!-- Lock Page -->
-    <li class="hidden-mobile">
-      <div class="alain-default__nav-item" [routerLink]="['/lock']">
-        <i nz-icon nzType="lock"></i>
-      </div>
-    </li>
   </ul>
   <ul class="alain-default__nav">
     <li>
-      <div
-          class="alain-default__nav-item d-flex align-items-center px-sm"
-          nz-dropdown
-          nzPlacement="bottomRight"
-          [nzDropdownMenu]="roleMenu"
-      >
+      <div class="alain-default__nav-item d-flex align-items-center px-sm"
+           nz-dropdown
+           nzPlacement="bottomRight"
+           [nzDropdownMenu]="roleMenu">
         当前角色: {{ role }}
       </div>
       <nz-dropdown-menu #roleMenu="nzDropdownMenu">
@@ -40,21 +32,6 @@
       </nz-dropdown-menu>
     </li>
     <!-- Settings -->
-    <li class="hidden-mobile">
-      <div class="alain-default__nav-item" nz-dropdown [nzDropdownMenu]="settingsMenu" nzTrigger="click" nzPlacement="bottomRight">
-        <i nz-icon nzType="setting"></i>
-      </div>
-      <nz-dropdown-menu #settingsMenu="nzDropdownMenu">
-        <div nz-menu style="width: 200px;">
-          <div nz-menu-item>
-            <header-fullscreen></header-fullscreen>
-          </div>
-          <div nz-menu-item>
-            <header-storage></header-storage>
-          </div>
-        </div>
-      </nz-dropdown-menu>
-    </li>
     <li class="hidden-mobile">
       <header-user></header-user>
     </li>

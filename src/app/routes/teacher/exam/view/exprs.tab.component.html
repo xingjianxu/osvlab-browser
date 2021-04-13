@@ -14,7 +14,11 @@
     <tbody>
     <tr *ngFor="let examExpr of exprsTable.data">
       <td>{{ examExpr.rank }}</td>
-      <td>{{ examExpr.expr.title }}</td>
+      <td>
+        <a [routerLink]="['/', 'teacher', 'expr', 'view']" [queryParams]="{exprId: examExpr.expr.id}">
+          {{ examExpr.expr.title }}
+        </a>
+      </td>
       <td>{{ examExpr.vmIdPrefix }}</td>
       <td>
         <a (click)="updateExpr(examExpr)">修改</a>

@@ -7,9 +7,9 @@
   </ng-template>
 </page-header>
 
-<nz-card [nzBordered]="false">
+<nz-card>
   总人数：{{ students.length }}
-  <nz-table [nzData]="students" nzSize="middle">
+  <nz-table [nzData]="students" [nzBordered]="true" nzSize="small">
     <thead>
       <tr>
         <th>学号</th>

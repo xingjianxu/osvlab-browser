@@ -9,6 +9,7 @@ import {NzIconService} from 'ng-zorro-antd/icon';
 import {ICONS} from '../../../style-icons';
 import {ICONS_AUTO} from '../../../style-icons-auto';
 import {StompRService} from "@stomp/ng2-stompjs";
+import {environment} from "@env/environment";
 
 /**
  * Used for application startup
@@ -32,10 +33,9 @@ export class StartupService {
     });
   }
 
-
   private initStomp(token: string) {
     this.stompRService.config = {
-      url: 'ws://127.0.0.1:8080/api/ws/stomp',
+      url: `ws://${environment.apiRootUrl}/ws/stomp`,
       headers: {
         token,
       },
