@@ -3,7 +3,7 @@ import {_HttpClient} from '@delon/theme';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {User} from './user';
-import {UserGroup} from './user-group';
+import {R} from "@service/r";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +24,12 @@ export class UserService {
   find(userId: string) {
     return this.httpClient.get<User>('api/user', {userId}).pipe(map((resp) => {
       return User.fromJSON(resp);
+    }));
+  }
+
+  updatePassword(curPassword: string, newPassword: string) {
+    return this.httpClient.post('api/user/updatePassword', {curPassword, newPassword}).pipe(map((resp) => {
+      return new R(resp);
     }));
   }
 }

@@ -7,20 +7,24 @@
   </ng-template>
 </page-header>
 
-<nz-table #examsTable [nzData]="userGroups">
+<nz-table #userGroupsTable [nzData]="userGroups" [nzBordered]="true" nzSize="small">
   <thead>
   <tr>
-    <th>名称</th>
-    <th>描述</th>
-    <th></th>
+    <th nzWidth="200px">名称</th>
+    <th nzWidth="100px">人数</th>
+    <th nzWidth="30%">描述</th>
+    <th>操作</th>
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let userGroup of userGroups">
+  <tr *ngFor="let userGroup of userGroupsTable.data">
     <td><a [routerLink]="['..', 'view']" [queryParams]="{student_group_id: userGroup.id, tab: 'students'}">{{userGroup.name}}</a></td>
+    <td>{{userGroup.usersCount}}</td>
     <td>{{userGroup.description}}</td>
     <td>
       <a (click)="openEditor(userGroup)">编辑</a>
+      <nz-divider nzType="vertical"></nz-divider>
+      <a>删除</a>
     </td>
   </tr>
   </tbody>

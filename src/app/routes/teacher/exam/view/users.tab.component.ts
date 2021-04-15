@@ -189,4 +189,8 @@ export class ExamViewUsersTabComponent implements OnInit, OnDestroy {
       this.msgService.success('正在分配该考生的所有主机！');
     });
   }
+
+  editUser() {
+
+  }
 }

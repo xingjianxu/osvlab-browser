@@ -1,13 +1,22 @@
-<div class="sidebar" xmlns="http://www.w3.org/1999/html">
-  <nz-breadcrumb *ngIf="!!exam && !!expr">
-    <nz-breadcrumb-item>
-      <a [routerLink]="['../..', 'view']" [queryParams]="{ examId: exam.id }">测试：{{ exam.title }}</a>
-    </nz-breadcrumb-item>
-    <nz-breadcrumb-item>
-      实验：{{ expr.title }}
-    </nz-breadcrumb-item>
-    <nz-breadcrumb-item> 剩余时间: {{ remainTime }} </nz-breadcrumb-item>
-  </nz-breadcrumb>
+<div class="sidebar">
+  <div *ngIf="!!exam && !!expr" class="titlebar">
+    <div style="display: flex;justify-content: flex-start;width: 50%">
+      <span style="width: 100%" class="text-nowrap text-truncate">
+        <i nz-icon nzIconfont="expr"></i>
+        {{ expr.title }}
+      </span>
+    </div>
+    <div style="display: flex;justify-content: flex-end;width: 50%">
+      <span nz-tooltip nzTooltipTitle="考试剩余时间">
+        <i nz-icon nzIconfont="stopwatch"></i>
+        {{ remainTime }}
+      </span>
+      <span style="margin-left: 1em;" nz-tooltip nzTooltipTitle="当前实验成绩">
+          <i nz-icon nzIconfont="score"></i>
+          100/100
+      </span>
+    </div>
+  </div>
   <div class="steps">
     <nz-card *ngFor="let step of expr?.steps"
              [class.active]="activeStepId == step.id"
@@ -18,11 +27,15 @@
              (click)="setActiveStep(step.id)">
       {{ step.description }}
       <ng-template #extraTpl>
-        <button nz-button nzSize="small" nzType="primary"
+        <button nz-button nzSize="small"
+                [class.full-score]="step.score >= step.fullScore"
+                [nzType]="step.score == undefined ? 'dashed' : 'primary'"
                 (click)="checkStep(step, $event)"
                 [nzLoading]="step.checking">
-          <i nz-icon nzType="play-circle"></i>
-          {{ step.score === undefined ? '-' : step.score }} / {{ step.fullScore }}
+          <i nz-icon nzType="thunderbolt" nzTheme="outline"></i>
+          <span style="text-align: right;">
+            {{ step.score === undefined ? '-' : step.score }} / {{ step.fullScore }}
+          </span>
         </button>
       </ng-template>
     </nz-card>
@@ -36,19 +49,22 @@
             (click)="connectHostVnc(host.hostId)"
             [nzType]="currentHostId == host.hostId ? 'primary' : 'dashed'"
             nz-button nzSize="small">
+      <i nz-icon nzIconfont="computer"></i>
       Host{{host.hostId}}: {{host.cidr}}
     </button>
     <nz-divider nzType="vertical"></nz-divider>
     网关: {{examUserHosts[0]?.gw}}
     <div style="float: right">
       <button nz-button nzSize="small" nzType="primary" (click)="startHost()" [nzLoading]="hostStarting" [disabled]="!!rfb">
+        <i nz-icon nzType="play-circle" nzTheme="outline"></i>
         启动
       </button>
       <nz-divider nzType="vertical"></nz-divider>
       <button nz-button nzSize="small" nzDanger (click)="stopHost()" [nzLoading]="hostStopping" [disabled]="!rfb"
               nz-popconfirm nzPopconfirmPlacement="bottom" nzOkType="danger"
               nzPopconfirmTitle="确认强制关机？一般情况下请使用操作系统命令进行关机与重启！">
-        强制关机
+        <i nz-icon nzType="poweroff"></i>
+        关机
       </button>
       <nz-divider nzType="vertical"></nz-divider>
       <button nz-button nzSize="small" nzDanger

@@ -29,12 +29,14 @@ const HEADERCOMPONENTS = [
   HeaderTaskComponent,
   HeaderFullScreenComponent,
   HeaderStorageComponent,
-  HeaderUserComponent
+  HeaderUserComponent,
+  EditUserProfileComponent
 ];
 
 // passport
 import {NzLayoutModule} from 'ng-zorro-antd/layout';
 import { LayoutPassportComponent } from './passport/passport.component';
+import {EditUserProfileComponent} from "./default/header/components/edit-user-profile/edit-user-profile.component";
 const PASSPORT = [
   LayoutPassportComponent
 ];

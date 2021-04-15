@@ -4,24 +4,31 @@
   margin: 75px auto;
 }
 
+button.full-score {
+  background: #00AA00;
+  border-color: #00AA00;
+}
+
 .sidebar {
   width: 600px;
   background-color: white;
   border: 1px solid #ddd;
   float: left;
 
-  nz-breadcrumb {
-    margin: 10px 16px;
+  .titlebar {
+    margin: 4px 10px;
+    line-height: 34px;
+    display: flex;
+    justify-content: flex-start;
   }
 
   .steps {
     height: calc(max(100vh - 128px, 785px));
-    margin-top: 10px;
     overflow-y: scroll;
     border-top: 1px solid #ddd;
 
     nz-card {
-      margin-bottom: 1em;
+      margin-bottom: 0.5em;
       border-left: none;
       border-right: none;
       border-radius: 0;
@@ -36,8 +43,8 @@
       }
 
       &.active {
-        border-color: transparent;
-        box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.09), 0 3px 6px 0 rgba(0, 0, 0, 0.12), 0 0 12px 6px rgba(0, 0, 0, 0.2);
+        border: 1px dashed #73d13d;
+        box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.09), 0 3px 6px 0 rgba(0, 0, 0, 0.06), 0 0 8px 6px rgba(0, 0, 0, 0.05);
       }
     }
   }
@@ -49,6 +56,7 @@
   background-color: white;
   border: 1px solid #ddd;
   border-left: none;
+
   .toolbar {
     line-height: 42px;
     margin-bottom: 10px;

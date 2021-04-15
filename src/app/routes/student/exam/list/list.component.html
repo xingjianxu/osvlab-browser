@@ -2,7 +2,7 @@
   <ng-template #tab>
     <nz-tabset>
       <nz-tab nzTitle="当前测试">
-        <nz-table #examsTable [nzData]="examUserLinks" [nzLoading]="loading" [nzShowPagination]="false">
+        <nz-table #examsTable [nzData]="examUserLinks" [nzLoading]="loading" [nzShowPagination]="false" [nzBordered]="true">
           <thead>
           <tr>
             <th>名称</th>

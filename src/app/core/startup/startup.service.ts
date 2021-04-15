@@ -29,7 +29,7 @@ export class StartupService {
   ) {
     iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
     iconSrv.fetchFromIconfont({
-      scriptUrl: 'https://at.alicdn.com/t/font_2019460_d5c7zar6xps.js',
+      scriptUrl: 'https://at.alicdn.com/t/font_2019460_rui8nmdfgxi.js',
     });
   }
 
