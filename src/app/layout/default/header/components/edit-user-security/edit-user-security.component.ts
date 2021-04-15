@@ -6,10 +6,10 @@ import {UserService} from "@service/user.service";
 import {NzNotificationService} from "ng-zorro-antd/notification";
 
 @Component({
-  selector: 'app-edit-user-profile',
-  templateUrl: './edit-user-profile.component.html',
+  selector: 'app-edit-user-security',
+  templateUrl: './edit-user-security.component.html',
 })
-export class EditUserProfileComponent implements OnInit {
+export class EditUserSecurityComponent implements OnInit {
 
   record: any = {};
   schema: SFSchema = {

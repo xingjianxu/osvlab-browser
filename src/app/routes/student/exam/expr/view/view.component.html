@@ -60,7 +60,9 @@
         启动
       </button>
       <nz-divider nzType="vertical"></nz-divider>
-      <button nz-button nzSize="small" nzDanger (click)="stopHost()" [nzLoading]="hostStopping" [disabled]="!rfb"
+      <button nz-button nzSize="small" nzDanger
+              [nzLoading]="hostStopping" [disabled]="!rfb"
+              (nzOnConfirm)="stopHost()"
               nz-popconfirm nzPopconfirmPlacement="bottom" nzOkType="danger"
               nzPopconfirmTitle="确认强制关机？一般情况下请使用操作系统命令进行关机与重启！">
         <i nz-icon nzType="poweroff"></i>

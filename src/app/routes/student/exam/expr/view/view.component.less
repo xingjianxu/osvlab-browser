@@ -32,6 +32,7 @@ button.full-score {
       border-left: none;
       border-right: none;
       border-radius: 0;
+      box-sizing: border-box;
 
       &:first-of-type {
         border-top: none;
@@ -43,7 +44,8 @@ button.full-score {
       }
 
       &.active {
-        border: 1px dashed #73d13d;
+        border-top: 1px dashed #73d13d;
+        border-bottom: 1px dashed #73d13d;
         box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.09), 0 3px 6px 0 rgba(0, 0, 0, 0.06), 0 0 8px 6px rgba(0, 0, 0, 0.05);
       }
     }

@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
 import {Router} from '@angular/router';
 import {DA_SERVICE_TOKEN, ITokenService} from '@delon/auth';
 import {ModalHelper, SettingsService, User} from '@delon/theme';
-import {EditUserProfileComponent} from "./edit-user-profile/edit-user-profile.component";
+import {EditUserSecurityComponent} from "./edit-user-security/edit-user-security.component";
 
 @Component({
   selector: 'header-user',
@@ -12,9 +12,9 @@ import {EditUserProfileComponent} from "./edit-user-profile/edit-user-profile.co
     </div>
     <nz-dropdown-menu #userMenu="nzDropdownMenu">
       <div nz-menu class="width-sm">
-        <div nz-menu-item (click)="openUserProfileEditor()">
-          <i nz-icon nzType="profile" nzTheme="outline" class="mr-sm"></i>
-          个人信息维护
+        <div nz-menu-item (click)="openUserSecurityEditor()">
+          <i nz-icon nzType="security-scan" nzTheme="outline" class="mr-sm"></i>
+          账户安全
         </div>
         <li nz-menu-divider></li>
         <div nz-menu-item (click)="logout()">
@@ -43,8 +43,8 @@ export class HeaderUserComponent {
     this.router.navigateByUrl(this.tokenService.login_url);
   }
 
-  openUserProfileEditor() {
-    this.modalHelper.createStatic(EditUserProfileComponent,
+  openUserSecurityEditor() {
+    this.modalHelper.createStatic(EditUserSecurityComponent,
       {record: this.user},
       {size: 'md'}
     ).subscribe((r) => {

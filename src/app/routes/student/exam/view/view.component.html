@@ -2,7 +2,9 @@
   <ng-template #tab>
     <nz-tabset>
       <nz-tab nzTitle="实验列表">
-        <nz-table #exprsTable [nzData]="exprScores" [nzLoading]="exprsLoading || examLoading" [nzShowPagination]="false">
+        <nz-table #exprsTable [nzData]="exprScores" [nzLoading]="exprsLoading || examLoading"
+                  [nzFrontPagination]="false"
+                  [nzBordered]="true">
           <thead>
           <tr>
             <th>名称</th>

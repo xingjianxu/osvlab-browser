@@ -1,4 +1,7 @@
-<page-header [title]="'测试列表'" [tab]="tab">
+<page-header [title]="'测试列表'" [tab]="tab" [logo]="logo">
+  <ng-template #logo>
+    <div style="font-size: 20px;margin-top: -1px"><i nz-icon nzIconfont="exam"></i></div>
+  </ng-template>
   <ng-template #tab>
     <nz-tabset>
       <nz-tab nzTitle="当前测试">
@@ -31,7 +34,6 @@
           </tbody>
         </nz-table>
       </nz-tab>
-      <nz-tab nzTitle="历史成绩"></nz-tab>
     </nz-tabset>
   </ng-template>
 </page-header>
