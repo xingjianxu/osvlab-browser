@@ -1,18 +1,16 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ACLGuard } from '@delon/acl';
-import { JWTGuard, SimpleGuard } from '@delon/auth';
-import { environment } from '@env/environment';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {ACLGuard} from '@delon/acl';
+import {JWTGuard} from '@delon/auth';
+import {environment} from '@env/environment';
 // layout
-import { LayoutDefaultComponent } from '../layout/default/default.component';
-import { LayoutPassportComponent } from '../layout/passport/passport.component';
-// single pages
-import { CallbackComponent } from './callback/callback.component';
+import {LayoutDefaultComponent} from '../layout/default/default.component';
+import {LayoutPassportComponent} from '../layout/passport/passport.component';
 // dashboard pages
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { UserLockComponent } from './passport/lock/lock.component';
+import {DashboardComponent} from './dashboard/dashboard.component';
+import {UserLockComponent} from './passport/lock/lock.component';
 // passport pages
-import { UserLoginComponent } from './passport/login/login.component';
+import {UserLoginComponent} from './passport/login/login.component';
 
 const routes: Routes = [
   {
@@ -21,24 +19,24 @@ const routes: Routes = [
     canActivate: [JWTGuard],
     canActivateChild: [JWTGuard],
     children: [
-      { path: '', component: DashboardComponent },
-      { path: 'exception', loadChildren: () => import('./exception/exception.module').then((m) => m.ExceptionModule) },
+      {path: '', component: DashboardComponent},
+      {path: 'exception', loadChildren: () => import('./exception/exception.module').then((m) => m.ExceptionModule)},
       {
         path: 'student',
         canLoad: [JWTGuard, ACLGuard],
-        data: { guard: 'student' },
+        data: {guard: 'student'},
         loadChildren: () => import('./student/student.module').then((m) => m.StudentModule),
       },
       {
         path: 'teacher',
         canLoad: [JWTGuard, ACLGuard],
-        data: { guard: 'teacher' },
+        data: {guard: 'teacher'},
         loadChildren: () => import('./teacher/teacher.module').then((m) => m.TeacherModule),
       },
       {
         path: 'admin',
         canLoad: [JWTGuard, ACLGuard],
-        data: { guard: 'admin' },
+        data: {guard: 'admin'},
         loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),
       },
     ],
@@ -47,13 +45,12 @@ const routes: Routes = [
     path: 'passport',
     component: LayoutPassportComponent,
     children: [
-      { path: 'login', component: UserLoginComponent, data: { title: '登录', titleI18n: '登陆' } },
-      { path: 'lock', component: UserLockComponent, data: { title: '锁屏', titleI18n: '锁屏' } },
+      {path: 'login', component: UserLoginComponent, data: {title: '登录', titleI18n: '登陆'}},
+      {path: 'lock', component: UserLockComponent, data: {title: '锁屏', titleI18n: '锁屏'}},
     ],
   },
   // 单页不包裹Layout
-  { path: 'callback/:type', component: CallbackComponent },
-  { path: '**', redirectTo: 'exception/404' },
+  {path: '**', redirectTo: 'exception/404'},
 ];
 
 @NgModule({
@@ -68,4 +65,5 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class RouteRoutingModule {}
+export class RouteRoutingModule {
+}

@@ -9,7 +9,6 @@ import { ACLService } from '@delon/acl';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit {
-  searchToggleStatus: boolean;
   role: string;
 
   get app(): App {
@@ -33,14 +32,6 @@ export class HeaderComponent implements OnInit {
         this.cdr.detectChanges();
       }
     });
-  }
-
-  toggleCollapsedSidebar() {
-    this.settings.setLayout('collapsed', !this.settings.layout.collapsed);
-  }
-
-  searchToggleChange() {
-    this.searchToggleStatus = !this.searchToggleStatus;
   }
 
   ngOnInit(): void {}
