@@ -12,8 +12,8 @@ import {DA_SERVICE_TOKEN, ITokenService} from '@delon/auth';
 import {_HttpClient} from '@delon/theme';
 import {environment} from '@env/environment';
 import {NzNotificationService} from 'ng-zorro-antd/notification';
-import {BehaviorSubject, Observable, of, throwError} from 'rxjs';
-import {catchError, filter, mergeMap, switchMap, take} from 'rxjs/operators';
+import {Observable, of, throwError} from 'rxjs';
+import {catchError, mergeMap} from 'rxjs/operators';
 
 const CODEMESSAGE = {
   200: '服务器成功返回请求的数据。',
@@ -125,7 +125,10 @@ export class DefaultInterceptor implements HttpInterceptor {
     // 统一加上服务端前缀
     let url = req.url;
     if (!url.startsWith('https://') && !url.startsWith('http://')) {
-      url = environment.SERVER_URL + url;
+      if (!url.startsWith('/')) {
+        url = '/' + url;
+      }
+      url = environment.serverUrl + url;
     }
 
     const newReq = req.clone({url});

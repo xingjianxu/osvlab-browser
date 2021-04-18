@@ -1,5 +1,5 @@
 export const environment = {
-  SERVER_URL: `./`,
+  serverUrl: `https://osvlab.bixlab.cn`,
   production: true,
   useHash: true,
   hmr: false,

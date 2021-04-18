@@ -29,7 +29,7 @@ export class StartupService {
   ) {
     iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
     iconSrv.fetchFromIconfont({
-      scriptUrl: 'https://at.alicdn.com/t/font_2019460_rui8nmdfgxi.js',
+      scriptUrl: environment.serverUrl+'/assets/iconfont.js',
     });
   }
 

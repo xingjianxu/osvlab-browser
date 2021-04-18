@@ -3,13 +3,10 @@
 */
 
 import {
-  ArrowDownOutline,
   CopyrightOutline,
   DeleteTwoTone,
   DragOutline,
   EditTwoTone,
-  FullscreenExitOutline,
-  FullscreenOutline,
   LockOutline,
   LockTwoTone,
   LogoutOutline,
@@ -17,22 +14,18 @@ import {
   PlayCircleTwoTone,
   PoweroffOutline,
   QuestionOutline,
-  SettingOutline,
+  SecurityScanOutline,
   StopTwoTone,
   ThunderboltOutline,
   ThunderboltTwoTone,
-  ToolOutline,
   UserOutline
 } from '@ant-design/icons-angular/icons';
 
 export const ICONS_AUTO = [
-  ArrowDownOutline,
   CopyrightOutline,
   DeleteTwoTone,
   DragOutline,
   EditTwoTone,
-  FullscreenExitOutline,
-  FullscreenOutline,
   LockOutline,
   LockTwoTone,
   LogoutOutline,
@@ -40,10 +33,9 @@ export const ICONS_AUTO = [
   PlayCircleTwoTone,
   PoweroffOutline,
   QuestionOutline,
-  SettingOutline,
+  SecurityScanOutline,
   StopTwoTone,
   ThunderboltOutline,
   ThunderboltTwoTone,
-  ToolOutline,
   UserOutline
 ];
