@@ -9,9 +9,8 @@ const COMPONENTS = [LayoutTeacherComponent];
 const COMPONENTS_NOROUNT = [];
 
 @NgModule({
-  imports: [SharedModule, TeacherRoutingModule, NzLayoutModule, ],
-  declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT],
-  entryComponents: COMPONENTS_NOROUNT,
+    imports: [SharedModule, TeacherRoutingModule, NzLayoutModule,],
+    declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT]
 })
 export class TeacherModule {
 }

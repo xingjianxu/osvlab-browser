@@ -10,9 +10,8 @@ const COMPONENTS = [ListComponent, ViewComponent];
 const COMPONENTS_NOROUNT = [EditComponent, BindStudentsComponent];
 
 @NgModule({
-  imports: [SharedModule, StudentGroupRoutingModule],
-  declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT],
-  entryComponents: COMPONENTS_NOROUNT,
+    imports: [SharedModule, StudentGroupRoutingModule],
+    declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT]
 })
 export class StudentGroupModule {
 }

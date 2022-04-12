@@ -10,8 +10,7 @@ const COMPONENTS = [];
 const COMPONENTS_NOROUNT = [];
 
 @NgModule({
-  imports: [SharedModule, StudentRoutingModule, NzLayoutModule, ExprModule, ExamModule],
-  declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT],
-  entryComponents: COMPONENTS_NOROUNT,
+    imports: [SharedModule, StudentRoutingModule, NzLayoutModule, ExprModule, ExamModule],
+    declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT]
 })
 export class StudentModule {}

@@ -14,8 +14,7 @@ const COMPONENTS = [ViewComponent, ListComponent, StepEditComponent];
 const COMPONENTS_NOROUNT = [EditComponent];
 
 @NgModule({
-  imports: [SharedModule, ExprRoutingModule, DragDropModule, NzBreadCrumbModule, NzTagModule],
-  declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT],
-  entryComponents: COMPONENTS_NOROUNT,
+    imports: [SharedModule, ExprRoutingModule, DragDropModule, NzBreadCrumbModule, NzTagModule],
+    declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT]
 })
 export class ExprModule {}

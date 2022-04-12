@@ -9,9 +9,8 @@ const COMPONENTS = [LayoutAdminComponent];
 const COMPONENTS_NOROUNT = [];
 
 @NgModule({
-  imports: [SharedModule, AdminRoutingModule, NzLayoutModule, ],
-  declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT],
-  entryComponents: COMPONENTS_NOROUNT,
+    imports: [SharedModule, AdminRoutingModule, NzLayoutModule,],
+    declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT]
 })
 export class AdminModule {
 }

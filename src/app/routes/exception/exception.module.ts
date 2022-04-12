@@ -12,8 +12,7 @@ const COMPONENTS = [Exception403Component, Exception404Component, Exception500Co
 const COMPONENTS_NOROUNT = [];
 
 @NgModule({
-  imports: [SharedModule, ExceptionRoutingModule],
-  declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT],
-  entryComponents: COMPONENTS_NOROUNT,
+    imports: [SharedModule, ExceptionRoutingModule],
+    declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT]
 })
 export class ExceptionModule {}

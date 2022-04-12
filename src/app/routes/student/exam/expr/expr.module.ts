@@ -11,8 +11,7 @@ const COMPONENTS = [ViewComponent];
 const COMPONENTS_NOROUNT = [];
 
 @NgModule({
-  imports: [SharedModule, ExprRoutingModule, NzTagModule, NzBreadCrumbModule, NzEmptyModule],
-  declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT],
-  entryComponents: COMPONENTS_NOROUNT,
+    imports: [SharedModule, ExprRoutingModule, NzTagModule, NzBreadCrumbModule, NzEmptyModule],
+    declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT]
 })
 export class ExprModule {}

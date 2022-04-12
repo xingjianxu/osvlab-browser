@@ -25,9 +25,8 @@ const COMPONENTS_NOROUNT = [
 ];
 
 @NgModule({
-  imports: [SharedModule, ExamRoutingModule, NzTagModule, OsvlabPipeModule],
-  declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT,],
-  entryComponents: COMPONENTS_NOROUNT,
+    imports: [SharedModule, ExamRoutingModule, NzTagModule, OsvlabPipeModule],
+    declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT,]
 })
 export class ExamModule {
 }
