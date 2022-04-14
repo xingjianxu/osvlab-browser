@@ -3,5 +3,5 @@ export const environment = {
   production: true,
   useHash: true,
   hmr: false,
-  apiRootUrl: 'https://osvlab.bixlab.cn/api',
+  apiRootUrl: 'https://osvlab.bixlab.cn/api'
 };

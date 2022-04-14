@@ -1,10 +1,10 @@
 import { enableProdMode, ViewEncapsulation } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { preloaderFinished } from '@delon/theme';
+import { environment } from '@env/environment';
 import { NzSafeAny } from 'ng-zorro-antd/core/types';
 
 import { AppModule } from './app/app.module';
-import { environment } from './environments/environment';
 
 preloaderFinished();
 
@@ -15,13 +15,13 @@ if (environment.production) {
 platformBrowserDynamic()
   .bootstrapModule(AppModule, {
     defaultEncapsulation: ViewEncapsulation.Emulated,
-    preserveWhitespaces: false,
+    preserveWhitespaces: false
   })
-  .then((res) => {
+  .then(res => {
     const win = window as NzSafeAny;
     if (win && win.appBootstrap) {
       win.appBootstrap();
     }
     return res;
   })
-  .catch((err) => console.error(err));
+  .catch(err => console.error(err));

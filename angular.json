@@ -61,6 +61,7 @@
               "s",
               "u",
               "ajv",
+              "ajv-formats",
               "date-fns"
             ],
             "stylePreprocessorOptions": {

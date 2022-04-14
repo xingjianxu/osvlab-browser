@@ -1,14 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { App, SettingsService } from '@delon/theme';
-import { ACLService } from '@delon/acl';
 
 @Component({
   selector: 'layout-header',
   templateUrl: './header.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   role: string;
 
   get app(): App {
@@ -20,7 +19,7 @@ export class HeaderComponent implements OnInit {
   }
 
   constructor(private settings: SettingsService, private router: Router, private cdr: ChangeDetectorRef) {
-    this.router.events.subscribe((val) => {
+    this.router.events.subscribe(val => {
       if (val instanceof NavigationEnd) {
         if (val.url.startsWith('/teacher')) {
           this.role = '教师';
@@ -33,6 +32,4 @@ export class HeaderComponent implements OnInit {
       }
     });
   }
-
-  ngOnInit(): void {}
 }

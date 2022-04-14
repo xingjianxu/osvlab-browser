@@ -96,16 +96,14 @@
     "prettier": "^2.6.0",
     "protractor": "~7.0.0",
     "source-map-explorer": "^2.5.2",
-    "stylelint": "^13.3.1",
-    "stylelint-config-prettier": "^8.0.1",
-    "stylelint-config-rational-order": "^0.1.2",
-    "stylelint-config-standard": "^20.0.0",
-    "stylelint-declaration-block-no-ignored-properties": "^2.3.0",
-    "stylelint-order": "^4.0.0",
-    "ts-node": "^9.1.1",
+    "stylelint": "^14.6.1",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-standard": "^25.0.0",
+    "stylelint-declaration-block-no-ignored-properties": "^2.5.0",
+    "stylelint-order": "^5.0.0",
+    "ts-node": "^10.7.0",
     "tslint-config-prettier": "^1.18.0",
-    "webpack-bundle-analyzer": "^3.6.1",
-    "xlsx": "^0.16.1"
+    "webpack-bundle-analyzer": "^3.6.1"
   },
   "lint-staged": {
     "(src)/**/*.{html,ts}": [

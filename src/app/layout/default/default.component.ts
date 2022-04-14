@@ -1,14 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import {
-  AfterViewInit,
-  Component,
-  ComponentFactoryResolver,
-  ElementRef,
-  Inject,
-  OnDestroy,
-  OnInit,
-  Renderer2,
-} from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, Inject, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { NavigationCancel, NavigationEnd, NavigationError, RouteConfigLoadEnd, RouteConfigLoadStart, Router } from '@angular/router';
 import { SettingsService } from '@delon/theme';
 import { updateHostClass } from '@delon/util';
@@ -18,9 +9,9 @@ import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'layout-default',
-  templateUrl: './default.component.html',
+  templateUrl: './default.component.html'
 })
-export class LayoutDefaultComponent implements OnInit, AfterViewInit, OnDestroy {
+export class LayoutDefaultComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
   isFetching = false;
 
@@ -31,10 +22,10 @@ export class LayoutDefaultComponent implements OnInit, AfterViewInit, OnDestroy 
     private settings: SettingsService,
     private el: ElementRef,
     private renderer: Renderer2,
-    @Inject(DOCUMENT) private doc: any,
+    @Inject(DOCUMENT) private doc: any
   ) {
     // scroll to top in change page
-    router.events.pipe(takeUntil(this.unsubscribe$)).subscribe((evt) => {
+    router.events.pipe(takeUntil(this.unsubscribe$)).subscribe(evt => {
       if (!this.isFetching && evt instanceof RouteConfigLoadStart) {
         this.isFetching = true;
       }
@@ -66,9 +57,6 @@ export class LayoutDefaultComponent implements OnInit, AfterViewInit, OnDestroy 
     });
 
     doc.body.classList[layout.colorWeak ? 'add' : 'remove']('color-weak');
-  }
-
-  ngAfterViewInit(): void {
   }
 
   ngOnInit() {

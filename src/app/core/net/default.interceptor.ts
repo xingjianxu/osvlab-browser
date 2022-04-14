@@ -1,19 +1,12 @@
-import {
-  HttpErrorResponse,
-  HttpEvent,
-  HttpHandler,
-  HttpInterceptor,
-  HttpRequest,
-  HttpResponseBase
-} from '@angular/common/http';
-import {Inject, Injectable, Injector} from '@angular/core';
-import {Router} from '@angular/router';
-import {DA_SERVICE_TOKEN, ITokenService} from '@delon/auth';
-import {_HttpClient} from '@delon/theme';
-import {environment} from '@env/environment';
-import {NzNotificationService} from 'ng-zorro-antd/notification';
-import {Observable, of, throwError} from 'rxjs';
-import {catchError, mergeMap} from 'rxjs/operators';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponseBase } from '@angular/common/http';
+import { Injectable, Injector } from '@angular/core';
+import { Router } from '@angular/router';
+import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
+import { _HttpClient } from '@delon/theme';
+import { environment } from '@env/environment';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, mergeMap } from 'rxjs/operators';
 
 const CODEMESSAGE = {
   200: '服务器成功返回请求的数据。',
@@ -30,7 +23,7 @@ const CODEMESSAGE = {
   500: '服务器发生错误，请检查服务器。',
   502: '网关错误。',
   503: '服务不可用，服务器暂时过载或维护。',
-  504: '网关超时。',
+  504: '网关超时。'
 };
 
 /**
@@ -38,8 +31,7 @@ const CODEMESSAGE = {
  */
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector) {
-  }
+  constructor(private injector: Injector) {}
 
   private get notification(): NzNotificationService {
     return this.injector.get(NzNotificationService);
@@ -73,10 +65,6 @@ export class DefaultInterceptor implements HttpInterceptor {
   }
 
   private handleData(ev: HttpResponseBase, req: HttpRequest<any>, next: HttpHandler): Observable<any> {
-    // 可能会因为 `throw` 导出无法执行 `_HttpClient` 的 `end()` 操作
-    if (ev.status > 0) {
-      this.http.end();
-    }
     this.checkStatus(ev);
     // 业务处理：一些通用操作
     switch (ev.status) {
@@ -126,14 +114,14 @@ export class DefaultInterceptor implements HttpInterceptor {
     let url = req.url;
     if (!url.startsWith('https://') && !url.startsWith('http://')) {
       if (!url.startsWith('/')) {
-        url = '/' + url;
+        url = `/${url}`;
       }
       url = environment.serverUrl + url;
     }
 
-    const newReq = req.clone({url});
+    const newReq = req.clone({ url });
     return next.handle(newReq).pipe(
-      mergeMap((ev) => {
+      mergeMap(ev => {
         // 允许统一对请求错误处理
         if (ev instanceof HttpResponseBase) {
           return this.handleData(ev, newReq, next);
@@ -141,7 +129,7 @@ export class DefaultInterceptor implements HttpInterceptor {
         // 若一切都正常，则后续操作
         return of(ev);
       }),
-      catchError((err: HttpErrorResponse) => this.handleData(err, newReq, next)),
+      catchError((err: HttpErrorResponse) => this.handleData(err, newReq, next))
     );
   }
 }

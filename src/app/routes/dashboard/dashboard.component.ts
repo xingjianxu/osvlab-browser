@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ACLService } from '@delon/acl';
 
 @Component({
   selector: 'app-dashboard',
-  template: '',
+  template: ''
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
   constructor(private router: Router, private aclService: ACLService) {
     if (this.aclService.can('teacher')) {
       this.router.navigate(['teacher']);
@@ -16,6 +16,4 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['student']);
     }
   }
-
-  ngOnInit() {}
 }

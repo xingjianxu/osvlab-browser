@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-
 import { SharedModule } from '@shared';
+
 // single pages
 // dashboard pages
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -16,12 +16,12 @@ const COMPONENTS = [
   // passport pages
   UserLoginComponent,
   // single pages
-  UserLockComponent,
+  UserLockComponent
 ];
 const COMPONENTS_NOROUNT = [];
 
 @NgModule({
   imports: [SharedModule, RouteRoutingModule, StudentModule, TeacherModule],
-  declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT],
+  declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT]
 })
 export class RoutesModule {}
