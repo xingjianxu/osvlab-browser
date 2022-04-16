@@ -6,15 +6,14 @@ import {ReuseTabService} from '@delon/abc/reuse-tab';
 import {DA_SERVICE_TOKEN, ITokenService, SocialService} from '@delon/auth';
 import {_HttpClient, SettingsService} from '@delon/theme';
 import {NzMessageService} from 'ng-zorro-antd/message';
-import {StompConfig, StompRService} from "@stomp/ng2-stompjs";
 
 @Component({
   selector: 'passport-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.less'],
-  providers: [SocialService],
+  providers: [SocialService]
 })
-export class UserLoginComponent implements OnDestroy {
+export class UserLoginComponent {
   constructor(
     fb: FormBuilder,
     private router: Router,
@@ -26,12 +25,12 @@ export class UserLoginComponent implements OnDestroy {
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     private startupSrv: StartupService,
     public http: _HttpClient,
-    public msg: NzMessageService,
+    public msg: NzMessageService
   ) {
     this.form = fb.group({
       username: [null, [Validators.required]],
       password: [null, [Validators.required]],
-      rememberMe: [true],
+      rememberMe: [true]
     });
   }
 
@@ -63,17 +62,17 @@ export class UserLoginComponent implements OnDestroy {
       .post('api/auth/login?_allow_anonymous=true', {
         username: this.username.value,
         password: this.password.value,
-        rememberMe: this.rememberMe.value,
+        rememberMe: this.rememberMe.value
       })
-      .subscribe((res) => {
-        if (res.msg !== 'ok') {
+      .subscribe(res => {
+        if (res.code !== 0) {
           this.error = res.msg;
           return;
         }
         // 清空路由复用信息
         this.reuseTabService.clear();
         // 设置用户Token信息
-        this.tokenService.set(res.user);
+        this.tokenService.set(res.data.user);
         // 重新获取 StartupService 内容，我们始终认为应用信息一般都会受当前用户授权范围而影响
         this.startupSrv.load().then(() => {
           let url = this.tokenService.referrer.url || '/';
@@ -83,8 +82,5 @@ export class UserLoginComponent implements OnDestroy {
           this.router.navigateByUrl(url);
         });
       });
-  }
-
-  ngOnDestroy(): void {
   }
 }

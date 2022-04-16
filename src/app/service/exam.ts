@@ -1,7 +1,7 @@
-import { parseISO } from 'date-fns';
-import { isBefore } from 'date-fns';
+import { ExamUserLink } from '@service/exam-user-link';
+import { parseISO, isBefore } from 'date-fns';
+
 import { Expr } from './expr';
-import {ExamUserLink} from "@service/exam-user-link";
 
 export class Exam {
   id: number;
@@ -10,7 +10,7 @@ export class Exam {
   startedAt: Date;
   endedAt: Date;
   createdAt: Date;
-  examExprs: {expr: Expr}[];
+  examExprs: Array<{ expr: Expr }>;
   examUserLinks: ExamUserLink[];
   fullScore: number;
 
@@ -30,7 +30,7 @@ export class Exam {
     return this.ongoing ? '进行中' : this.ended ? '已结束' : '未开始';
   }
 
-  get hostsCount() {
+  get hostCount() {
     return this.examExprs.reduce((acc, cur) => {
       return acc + cur['expr']['hostCount'];
     }, 0);
@@ -38,7 +38,7 @@ export class Exam {
 
   static fromJSON(data: {}): Exam {
     const exam = Object.assign(new this(), data);
-    ['startedAt', 'endedAt', 'createdAt'].forEach((p) => {
+    ['startedAt', 'endedAt', 'createdAt'].forEach(p => {
       exam[p] = parseISO(data[p]);
     });
     return exam;

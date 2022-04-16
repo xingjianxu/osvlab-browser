@@ -5,11 +5,11 @@
         <a [routerLink]="['/', 'teacher', 'expr']">实验</a>
       </nz-breadcrumb-item>
       <nz-breadcrumb-item>
-        <a [routerLink]="['/', 'teacher', 'expr', 'view']" [queryParams]="{ exprId: record?.expr?.id }">
-          {{ record?.expr?.title }}
+        <a [routerLink]="['/', 'teacher', 'expr', 'view']" [queryParams]="{ exprId: step?.expr?.id }">
+          {{ step?.expr?.title }}
         </a>
       </nz-breadcrumb-item>
-      <nz-breadcrumb-item *ngIf="record?.title"> #{{ record.idx + 1 }}: {{ record.title }} </nz-breadcrumb-item>
+      <nz-breadcrumb-item *ngIf="step?.title"> #{{ step.idx + 1 }}: {{ step.title }} </nz-breadcrumb-item>
     </nz-breadcrumb>
   </ng-template>
   <ng-template #action>
@@ -17,4 +17,4 @@
     <button nz-button (click)="sf.reset()">重置</button>
   </ng-template>
 </page-header>
-<sf #sf mode="edit" [schema]="schema" [formData]="record" button="none"></sf>
+<sf #sf mode="edit" [schema]="schema" [formData]="step" button="none"></sf>

@@ -1,31 +1,30 @@
 <div class="alain-default__header-logo">
-  <a [routerLink]="['/']" class="alain-default__header-logo-link" style="color: white;font-weight: bold;font-size: 1.5em;">
-    OSVLab
-  </a>
+  <a [routerLink]="['/']" class="alain-default__header-logo-link" style="color: white; font-weight: bold; font-size: 1.5em"> OSVLab </a>
 </div>
 <div class="alain-default__nav-wrap">
-  <ul class="alain-default__nav">
-  </ul>
+  <ul class="alain-default__nav"> </ul>
   <ul class="alain-default__nav">
     <li>
-      <div class="alain-default__nav-item d-flex align-items-center px-sm"
-           nz-dropdown
-           nzPlacement="bottomRight"
-           [nzDropdownMenu]="roleMenu">
+      <div
+        class="alain-default__nav-item d-flex align-items-center px-sm"
+        nz-dropdown
+        nzPlacement="bottomRight"
+        [nzDropdownMenu]="roleMenu"
+      >
         当前角色: {{ role }}
       </div>
       <nz-dropdown-menu #roleMenu="nzDropdownMenu">
         <div nz-menu class="width-sm">
           <div *aclIf="['student', 'teacher', 'admin']" nz-menu-item [routerLink]="['student']">
-            <i nz-icon nzIconfont="student"></i>
+            <i nz-icon nzIconfont="student" class="mr-sm"></i>
             学生
           </div>
           <div *aclIf="'teacher'" nz-menu-item [routerLink]="['teacher']">
-            <i nz-icon nzIconfont="teacher"></i>
+            <i nz-icon nzIconfont="teacher" class="mr-sm"></i>
             教师
           </div>
           <div *aclIf="'admin'" nz-menu-item [routerLink]="['admin']">
-            <i nz-icon nzIconfont="admin"></i>
+            <i nz-icon nzIconfont="admin" class="mr-sm"></i>
             管理员
           </div>
         </div>

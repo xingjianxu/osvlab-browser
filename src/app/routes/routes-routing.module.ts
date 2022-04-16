@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ACLGuard } from '@delon/acl';
-import { JWTGuard } from '@delon/auth';
+import {JWTGuard, SimpleGuard} from '@delon/auth';
 import { environment } from '@env/environment';
 
 // layout
@@ -17,26 +17,26 @@ const routes: Routes = [
   {
     path: '',
     component: LayoutDefaultComponent,
-    canActivate: [JWTGuard],
-    canActivateChild: [JWTGuard],
+    canActivate: [SimpleGuard],
+    canActivateChild: [SimpleGuard],
     children: [
       { path: '', component: DashboardComponent },
       { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
       {
         path: 'student',
-        canLoad: [JWTGuard, ACLGuard],
+        canLoad: [SimpleGuard, ACLGuard],
         data: { guard: 'student' },
         loadChildren: () => import('./student/student.module').then(m => m.StudentModule)
       },
       {
         path: 'teacher',
-        canLoad: [JWTGuard, ACLGuard],
+        canLoad: [SimpleGuard, ACLGuard],
         data: { guard: 'teacher' },
         loadChildren: () => import('./teacher/teacher.module').then(m => m.TeacherModule)
       },
       {
         path: 'admin',
-        canLoad: [JWTGuard, ACLGuard],
+        canLoad: [SimpleGuard, ACLGuard],
         data: { guard: 'admin' },
         loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)
       }

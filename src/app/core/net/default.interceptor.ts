@@ -1,12 +1,21 @@
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponseBase } from '@angular/common/http';
-import { Injectable, Injector } from '@angular/core';
-import { Router } from '@angular/router';
-import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
-import { _HttpClient } from '@delon/theme';
-import { environment } from '@env/environment';
-import { NzNotificationService } from 'ng-zorro-antd/notification';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, mergeMap } from 'rxjs/operators';
+import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse,
+  HttpResponseBase
+} from '@angular/common/http';
+import {Injectable, Injector} from '@angular/core';
+import {Router} from '@angular/router';
+import {DA_SERVICE_TOKEN, ITokenService} from '@delon/auth';
+import {_HttpClient} from '@delon/theme';
+import {environment} from '@env/environment';
+import {NzNotificationService} from 'ng-zorro-antd/notification';
+import {Observable, of, throwError} from 'rxjs';
+import {catchError, mergeMap} from 'rxjs/operators';
+import {NzMessageService} from "ng-zorro-antd/message";
 
 const CODEMESSAGE = {
   200: '服务器成功返回请求的数据。',
@@ -31,7 +40,8 @@ const CODEMESSAGE = {
  */
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector) {}
+  constructor(private injector: Injector) {
+  }
 
   private get notification(): NzNotificationService {
     return this.injector.get(NzNotificationService);
@@ -66,28 +76,18 @@ export class DefaultInterceptor implements HttpInterceptor {
 
   private handleData(ev: HttpResponseBase, req: HttpRequest<any>, next: HttpHandler): Observable<any> {
     this.checkStatus(ev);
-    // 业务处理：一些通用操作
     switch (ev.status) {
       case 200:
-        // 业务层级错误处理，以下是假定restful有一套统一输出格式（指不管成功与否都有相应的数据格式）情况下进行处理
-        // 例如响应内容：
-        //  错误内容：{ status: 1, msg: '非法参数' }
-        //  正确内容：{ status: 0, response: {  } }
-        // 则以下代码片断可直接适用
-        // if (ev instanceof HttpResponse) {
-        //   const body = ev.body;
-        //   if (body && body.status !== 0) {
-        //     this.injector.get(NzMessageService).error(body.msg);
-        //     // 继续抛出错误中断后续所有 Pipe、subscribe 操作，因此：
-        //     // this.http.get('/').subscribe() 并不会触发
-        //     return throwError({});
-        //   } else {
-        //     // 重新修改 `body` 内容为 `response` 内容，对于绝大多数场景已经无须再关心业务状态码
-        //     return of(new HttpResponse(Object.assign(ev, { body: body.response })));
-        //     // 或者依然保持完整的格式
-        //     return of(ev);
-        //   }
-        // }
+        if (ev instanceof HttpResponse) {
+          const body = ev.body;
+          if (body?.code && body.code !== 0) {
+            switch (body.code) {
+              case 401:
+                this.toLogin();
+                break;
+            }
+          }
+        }
         break;
       case 401:
         this.toLogin();

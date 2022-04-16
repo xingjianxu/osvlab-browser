@@ -1,8 +1,9 @@
-import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
-import {Router} from '@angular/router';
-import {DA_SERVICE_TOKEN, ITokenService} from '@delon/auth';
-import {ModalHelper, SettingsService, User} from '@delon/theme';
-import {EditUserSecurityComponent} from "./edit-user-security/edit-user-security.component";
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
+import { ModalHelper, SettingsService, User } from '@delon/theme';
+
+import { EditUserSecurityComponent } from './edit-user-security/edit-user-security.component';
 
 @Component({
   selector: 'header-user',
@@ -24,7 +25,7 @@ import {EditUserSecurityComponent} from "./edit-user-security/edit-user-security
       </div>
     </nz-dropdown-menu>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderUserComponent {
   get user(): User {
@@ -35,8 +36,8 @@ export class HeaderUserComponent {
     private settings: SettingsService,
     private router: Router,
     private modalHelper: ModalHelper,
-    @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,) {
-  }
+    @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService
+  ) {}
 
   logout() {
     this.tokenService.clear();
@@ -44,10 +45,7 @@ export class HeaderUserComponent {
   }
 
   openUserSecurityEditor() {
-    this.modalHelper.createStatic(EditUserSecurityComponent,
-      {record: this.user},
-      {size: 'md'}
-    ).subscribe((r) => {
+    this.modalHelper.createStatic(EditUserSecurityComponent, { record: this.user }, { size: 'md' }).subscribe(r => {
       if (r.success) {
         this.logout();
       }

@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SFSchema } from '@delon/form';
+import { ExprService } from '@service/expr.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef } from 'ng-zorro-antd/modal';
-import { ExprService } from '@service/expr.service';
 
 @Component({
   selector: 'app-teacher-expr-edit',
-  templateUrl: './edit.component.html',
+  templateUrl: './edit.component.html'
 })
-export class EditComponent implements OnInit {
+export class EditComponent {
   record: any = {};
   schema: SFSchema = {
     properties: {
@@ -18,20 +18,18 @@ export class EditComponent implements OnInit {
         title: '描述',
         ui: {
           widget: 'textarea',
-          autosize: { minRows: 3, maxRows: 6 },
-        },
+          autosize: { minRows: 3, maxRows: 6 }
+        }
       },
-      hostCount: { type: 'number', title: '机器数量', default: 1 },
+      hostCount: { type: 'number', title: '机器数量', default: 1 }
     },
-    required: ['title', 'description', 'hostCount'],
+    required: ['title', 'description', 'hostCount']
   };
 
   constructor(private modal: NzModalRef, private msgSrv: NzMessageService, private exprService: ExprService) {}
 
-  ngOnInit(): void {}
-
   save(values: any) {
-    this.exprService.save(values).subscribe((expr) => {
+    this.exprService.save(values).subscribe(expr => {
       this.msgSrv.success('保存成功');
       this.modal.close(expr);
     });
