@@ -10,7 +10,7 @@ import { AlainConfig, ALAIN_CONFIG } from '@delon/util';
 
 const alainConfig: AlainConfig = {
   st: { modal: { size: 'lg' } },
-  pageHeader: { homeI18n: 'home' },
+  pageHeader: { homeI18n: 'home', fixed: true },
   auth: {
     store_key: '_osvlab_token',
     login_url: '/passport/login',

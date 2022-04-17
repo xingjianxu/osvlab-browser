@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SFNumberWidgetSchema, SFSchema } from '@delon/form';
+import { ExprService } from '@service/expr.service';
+import { StepService } from '@service/step.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-
-import { ExprService } from '@service/expr.service';
-import { StepService } from '@service/step.service';
 
 @Component({
   selector: 'app-teacher-expr-step-edit',
@@ -17,20 +16,29 @@ export class StepEditComponent implements OnInit {
 
   schema: SFSchema = {
     properties: {
-      title: { type: 'string', title: '标题', maxLength: 50 },
+      title: {
+        type: 'string',
+        title: '标题',
+        maxLength: 50
+      },
       description: {
         type: 'string',
         title: '描述',
         ui: {
           widget: 'textarea',
-          autosize: { minRows: 3, maxRows: 6 }
+          autosize: { minRows: 5, maxRows: 7 }
         }
       },
       fullScore: {
         type: 'number',
         title: '满分',
         minimum: 1,
-        default: 1
+        default: 1,
+        ui: {
+          grid: {
+            span: 3
+          }
+        }
       },
       hostId: {
         type: 'number',
@@ -38,7 +46,10 @@ export class StepEditComponent implements OnInit {
         default: 1,
         minimum: 1,
         ui: {
-          prefix: 'host'
+          prefix: 'host',
+          grid: {
+            span: 3
+          }
         } as SFNumberWidgetSchema
       },
       scoreScript: {
@@ -67,7 +78,10 @@ export class StepEditComponent implements OnInit {
     required: ['title', 'description', 'fullScore', 'scoreScript', 'hostId'],
     ui: {
       spanLabelFixed: 80,
-      width: 800
+      width: 800,
+      grid: {
+        span: 24
+      }
     }
   };
 

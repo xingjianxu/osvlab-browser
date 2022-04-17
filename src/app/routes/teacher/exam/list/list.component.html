@@ -24,7 +24,7 @@
         <a [routerLink]="['..', 'view']" [queryParams]="{ examId: exam.id, tab: 'users' }">{{ exam.title }}</a>
       </td>
       <td>{{ exam.description }}</td>
-      <td></td>
+      <td>{{ exam.state }}</td>
       <td>{{ exam['startedAt'] | dateFormat }}</td>
       <td>{{ exam['endedAt'] | dateFormat }}</td>
       <td>
